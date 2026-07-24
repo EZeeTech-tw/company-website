@@ -4,28 +4,24 @@ import Image from "next/image";
 import { Container } from "@/components/Container";
 import { AnimateOnScroll } from "@/components/AnimateOnScroll";
 import { IconPoC, IconData, IconIntegrate } from "@/components/Icons";
+import { VideoCarousel } from "@/components/VideoCarousel";
 import { getNewsList } from "@/lib/news";
 
 export default function HomePage() {
   const newsItems = getNewsList().slice(0, 4);
+  const heroVideos = [
+    "/news/istockphoto-2234949746-640_adpp_is.mp4",
+    "/news/v2_awv-3390f6cfffadcfa5.mp4"
+  ];
   return (
     <>
       {/* Hero: 全寬、16:9 比例、科技風背景 */}
       <section className="relative w-full aspect-[16/10] sm:aspect-[16/9] md:aspect-[16/8] lg:aspect-[16/7] min-h-[50vh] sm:min-h-[55vh] md:min-h-[60vh] flex items-center justify-center overflow-hidden">
-        {/* 背景圖：科技感 */}
+        {/* 背景影片輪播 */}
         <div className="absolute inset-0 bg-slate-950">
-          <div className="relative w-full h-full">
-            <Image
-              src="https://images.unsplash.com/photo-1639322537228-f710d846310a?w=1920&q=80"
-              alt=""
-              fill
-              className="object-cover opacity-40"
-              priority
-              sizes="100vw"
-            />
-          </div>
+          <VideoCarousel videos={heroVideos} interval={5000} />
           <div
-            className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-900/60 to-slate-950"
+            className="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-slate-900/40 to-slate-950/60"
             aria-hidden
           />
           {/* 會動的網格背景（向下斜向滾動） */}
@@ -53,9 +49,9 @@ export default function HomePage() {
         </div>
 
         <div className="relative z-10 w-full max-w-[1400px] min-w-0 px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          <div className="max-w-3xl">
             {/* 左側文字內容 */}
-            <div className="text-left lg:col-span-1">
+            <div className="text-left">
               <h1 className="hero-title-animate text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight mb-6 drop-shadow-lg" style={{ fontFamily: 'PROJECT9, sans-serif', textShadow: "0 0 40px rgba(6,182,212,0.3)" }}>
                 EZeeTech
               </h1>
@@ -80,82 +76,6 @@ export default function HomePage() {
                 >
                   最新消息
                 </Link>
-              </div>
-            </div>
-            
-            {/* 右側科技動畫 - 手機版隱藏 */}
-            <div className="hidden lg:flex relative w-full h-64 sm:h-80 lg:h-96 items-center justify-center">
-              <div className="relative w-full h-full max-w-md">
-                {/* 科技感網格背景 */}
-                <div 
-                  className="absolute inset-0 rounded-2xl border border-cyan-500/30"
-                  style={{
-                    background: `
-                      linear-gradient(rgba(6,182,212,0.1) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(6,182,212,0.1) 1px, transparent 1px)
-                    `,
-                    backgroundSize: "20px 20px",
-                    animation: "tech-grid 4s linear infinite"
-                  }}
-                />
-                
-                {/* 流動能量粒子 */}
-                <div className="absolute inset-0 overflow-hidden rounded-2xl">
-                  <div 
-                    className="absolute w-2 h-2 bg-cyan-400 rounded-full opacity-60"
-                    style={{
-                      top: "20%",
-                      left: "10%",
-                      animation: "particle-float 3s ease-in-out infinite"
-                    }}
-                  />
-                  <div 
-                    className="absolute w-3 h-3 bg-cyan-300 rounded-full opacity-40"
-                    style={{
-                      top: "60%",
-                      left: "70%",
-                      animation: "particle-float 4s ease-in-out infinite 1s"
-                    }}
-                  />
-                  <div 
-                    className="absolute w-1.5 h-1.5 bg-cyan-500 rounded-full opacity-80"
-                    style={{
-                      top: "40%",
-                      left: "40%",
-                      animation: "particle-float 2.5s ease-in-out infinite 2s"
-                    }}
-                  />
-                  <div 
-                    className="absolute w-2.5 h-2.5 bg-cyan-200 rounded-full opacity-30"
-                    style={{
-                      top: "80%",
-                      left: "25%",
-                      animation: "particle-float 5s ease-in-out infinite 1.5s"
-                    }}
-                  />
-                </div>
-                
-                {/* 能量波紋效果 */}
-                <div 
-                  className="absolute inset-0 rounded-2xl"
-                  style={{
-                    background: "radial-gradient(circle at center, transparent 30%, rgba(6,182,212,0.1) 70%, transparent 100%)",
-                    animation: "energy-pulse 4s ease-in-out infinite"
-                  }}
-                />
-                
-                {/* 中央核心 */}
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                  <div className="w-8 h-8 bg-cyan-500 rounded-full shadow-lg shadow-cyan-500/50">
-                    <div 
-                      className="absolute inset-0 rounded-full"
-                      style={{
-                        background: "radial-gradient(circle, rgba(6,182,212,0.8) 0%, rgba(6,182,212,0.2) 70%, transparent 100%)",
-                        animation: "core-glow 2s ease-in-out infinite"
-                      }}
-                    />
-                  </div>
-                </div>
               </div>
             </div>
           </div>
