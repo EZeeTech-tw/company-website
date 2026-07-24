@@ -11,7 +11,7 @@ export default function HomePage() {
   return (
     <>
       {/* Hero: 全寬、16:9 比例、科技風背景 */}
-      <section className="relative w-full aspect-[16/8] md:aspect-[16/7] min-h-[40vh] sm:min-h-[50vh] md:min-h-[60vh] flex items-center justify-center overflow-hidden">
+      <section className="relative w-full aspect-[16/10] sm:aspect-[16/9] md:aspect-[16/8] lg:aspect-[16/7] min-h-[50vh] sm:min-h-[55vh] md:min-h-[60vh] flex items-center justify-center overflow-hidden">
         {/* 背景圖：科技感 */}
         <div className="absolute inset-0 bg-slate-950">
           <div className="relative w-full h-full">
