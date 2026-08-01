@@ -19,7 +19,7 @@ export default function HomePage() {
       <section className="relative w-full aspect-[16/10] sm:aspect-[16/9] md:aspect-[16/8] lg:aspect-[16/7] min-h-[50vh] sm:min-h-[55vh] md:min-h-[60vh] flex items-center justify-center overflow-hidden">
         {/* 背景影片輪播 */}
         <div className="absolute inset-0 bg-slate-950">
-          <VideoCarousel videos={heroVideos} interval={4000} />
+          <VideoCarousel videos={heroVideos} />
           <div
             className="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-slate-900/40 to-slate-950/60"
             aria-hidden
