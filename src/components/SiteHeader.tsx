@@ -9,7 +9,7 @@ export function SiteHeader() {
         <nav className="flex flex-wrap items-center justify-between gap-3 sm:gap-4">
           <Link href="/" className="flex items-center gap-3">
             <Image
-              src="/news/EZeeTech.png"
+              src="/news/EZeeTech logo_未去背 (1).png"
               alt="EZeeTech"
               width={180}
               height={60}
