@@ -56,7 +56,7 @@ export default function HomePage() {
                 EZeeTech
               </h1>
               <p className="hero-desc-1 text-lg sm:text-xl text-white max-w-2xl leading-relaxed mb-4">
-                專注於車用電池系統之震動電能回收技術，
+                專注於車用電池系統之解決方案，
                 提供領先的車用應用驗證與試點解決方案。
               </p>
               <p className="hero-desc-2 text-slate-200 max-w-xl text-sm sm:text-base mb-10">
