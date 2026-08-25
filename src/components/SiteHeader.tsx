@@ -11,9 +11,9 @@ export function SiteHeader() {
             <Image
               src="/news/EZeeTech logo_未去背 (1).png"
               alt="EZeeTech"
-              width={180}
-              height={60}
-              className="h-12 w-auto object-contain"
+              width={126}
+              height={42}
+              className="h-8 w-auto object-contain"
               priority
             />
           </Link>
