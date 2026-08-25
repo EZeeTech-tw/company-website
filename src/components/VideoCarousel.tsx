@@ -14,6 +14,17 @@ export function VideoCarousel({ videos }: VideoCarouselProps) {
     videoRefs.current = videoRefs.current.slice(0, videos.length);
   }, [videos.length]);
 
+  useEffect(() => {
+    // Play the current video when index changes
+    const currentVideo = videoRefs.current[currentIndex];
+    if (currentVideo) {
+      currentVideo.currentTime = 0;
+      currentVideo.play().catch((err) => {
+        console.error("Failed to play video:", err);
+      });
+    }
+  }, [currentIndex]);
+
   const handleVideoEnded = () => {
     if (videos.length <= 1) return;
     setCurrentIndex((prev) => (prev + 1) % videos.length);
@@ -30,7 +41,7 @@ export function VideoCarousel({ videos }: VideoCarouselProps) {
             videoRefs.current[index] = el;
           }}
           src={video}
-          autoPlay
+          autoPlay={index === 0}
           muted
           playsInline
           onEnded={handleVideoEnded}
