@@ -19,32 +19,50 @@ export function SiteHeader() {
           </Link>
           <ul className="flex flex-wrap gap-4 sm:gap-6 text-sm text-slate-600">
             <li>
-              <Link href="/" className="hover:text-slate-900">
+              <Link 
+                href="/" 
+                className="hover:text-slate-900 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-cyan-500/20 hover:bg-cyan-50/50 px-2 py-1 rounded-md"
+              >
                 首頁
               </Link>
             </li>
             <li>
-              <Link href="/news" className="hover:text-slate-900">
+              <Link 
+                href="/news" 
+                className="hover:text-slate-900 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-cyan-500/20 hover:bg-cyan-50/50 px-2 py-1 rounded-md"
+              >
                 最新消息
               </Link>
             </li>
             <li>
-              <Link href="/technology" className="hover:text-slate-900">
+              <Link 
+                href="/technology" 
+                className="hover:text-slate-900 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-cyan-500/20 hover:bg-cyan-50/50 px-2 py-1 rounded-md"
+              >
                 技術與差異化
               </Link>
             </li>
             <li>
-              <Link href="/product" className="hover:text-slate-900">
+              <Link 
+                href="/product" 
+                className="hover:text-slate-900 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-cyan-500/20 hover:bg-cyan-50/50 px-2 py-1 rounded-md"
+              >
                 產品／解決方案
               </Link>
             </li>
             <li>
-              <Link href="/about" className="hover:text-slate-900">
+              <Link 
+                href="/about" 
+                className="hover:text-slate-900 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-cyan-500/20 hover:bg-cyan-50/50 px-2 py-1 rounded-md"
+              >
                 關於我們
               </Link>
             </li>
             <li>
-              <Link href="/contact" className="hover:text-slate-900">
+              <Link 
+                href="/contact" 
+                className="hover:text-slate-900 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-cyan-500/20 hover:bg-cyan-50/50 px-2 py-1 rounded-md"
+              >
                 聯絡我們
               </Link>
             </li>
