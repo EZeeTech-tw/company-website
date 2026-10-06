@@ -8,7 +8,7 @@ import { VideoCarousel } from "@/components/VideoCarousel";
 import { getNewsList } from "@/lib/news";
 
 export default function HomePage() {
-  const newsItems = getNewsList().slice(0, 4);
+  const newsItems = getNewsList().slice(0, 8);
   const heroVideos = [
     "/news/istockphoto-2234949746-640_adpp_is.mp4",
     "/news/v2_awv-3390f6cfffadcfa5.mp4"
