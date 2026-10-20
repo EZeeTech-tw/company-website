@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { NewsCard } from "./NewsCard";
 import type { NewsItem } from "@/lib/news";
-const categories = ["All", "Company", "CompositERA", "SSERS", "Awards", "Partnerships"];
+const categories = ["All", "Company", "CompositeERA", "SSERS", "Awards", "Partnerships"];
 export function NewsExplorer({ items }: { items: NewsItem[] }) {
  const [category,setCategory]=useState("All");
  const filtered=items.filter(item=>category==="All" || item.meta.category===category);

@@ -12,7 +12,7 @@ export interface NewsMeta {
   image?: string;
   /** 是否在新聞列表中隱藏 */
   hidden?: boolean;
-  category: "Company" | "CompositERA" | "SSERS" | "Awards" | "Partnerships";
+  category: "Company" | "CompositeERA" | "SSERS" | "Awards" | "Partnerships";
 }
 
 export interface NewsItem {
@@ -30,13 +30,13 @@ function getSlugFromFilename(filename: string): string {
 
 // Categorize original records; never relabel historical energy work as composites.
 function categoryFor(data: Record<string, unknown>): NewsMeta["category"] {
-  const allowed = ["Company", "CompositERA", "SSERS", "Awards", "Partnerships"];
+  const allowed = ["Company", "CompositeERA", "SSERS", "Awards", "Partnerships"];
   if (typeof data.category === "string" && allowed.includes(data.category)) return data.category as NewsMeta["category"];
   const text = `${data.title ?? ""} ${data.excerpt ?? ""}`;
   if (/產業發展獎勵補助/.test(text)) return "Company";
   if (/冠軍|第三名|獲頒|獎/.test(text)) return "Awards";
   if (/合作|備忘錄/.test(text)) return "Partnerships";
-  if (/CompositERA|CompositeOS/i.test(text)) return "CompositERA";
+  if (/CompositeERA|CompositeOS/i.test(text)) return "CompositeERA";
   if (/SSERS|PESA|能量回收|震動電能|振動/.test(text)) return "SSERS";
   return "Company";
 }

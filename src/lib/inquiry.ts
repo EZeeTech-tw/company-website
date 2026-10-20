@@ -1,8 +1,8 @@
 export const inquiryTypes = {
- compositera: "CompositERA — Composite Engineering",
- ssers: "SSERS — Energy Recovery",
- partnership: "Corporate Partnership",
- other: "Other Inquiry",
+  compositera: "CompositeERA — Composite Engineering",
+  ssers: "SSERS — Energy Recovery",
+  partnership: "Corporate Partnership",
+  other: "Other Inquiry",
 } as const;
 export type InquiryType = keyof typeof inquiryTypes;
 export const services = ["複合材料結構設計", "有限元素分析 FEA", "可製造性設計 DFM", "快速打樣"] as const;

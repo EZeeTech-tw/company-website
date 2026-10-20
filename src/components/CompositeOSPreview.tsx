@@ -102,6 +102,6 @@ export function CompositeOSPreview() {
       </div>
     </div>
     <p className="sr-only">規劃流程：{stages.map(stage=>stage.title).join("、")}。</p>
-    <p className="agent-positioning">以 Agent 串聯 CAD 準備、複材建模、模擬、失效評估與交付。CompositeOS 是 CompositERA 旗下開發中的平台。</p>
+    <p className="agent-positioning">以 Agent 串聯 CAD 準備、複材建模、模擬、失效評估與交付。CompositeOS 是 CompositeERA 旗下開發中的平台。</p>
   </div>;
 }

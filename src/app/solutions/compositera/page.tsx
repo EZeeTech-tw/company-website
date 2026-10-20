@@ -7,12 +7,12 @@ import { PageHero } from "@/components/PageHero";
 import { SectionHeader, CTASection } from "@/components/SiteSections";
 import { pageMetadata } from "@/lib/site";
 
-export const metadata = pageMetadata("CompositERA｜複合材料設計、FEA 分析與快速打樣", "CompositERA 提供複合材料結構設計、有限元素分析 FEA、可製造性設計 DFM 及快速打樣對接服務，協助無人機、機器人及硬體新創進行輕量化零件開發，並持續開發 CompositeOS 數位化研發平台。", "/solutions/compositera");
+export const metadata = pageMetadata("CompositeERA｜複合材料設計、FEA 分析與快速打樣", "CompositeERA 提供複合材料結構設計、有限元素分析 FEA、可製造性設計 DFM 及快速打樣對接服務，協助無人機、機器人及硬體新創進行輕量化零件開發，並持續開發 CompositeOS 數位化研發平台。", "/solutions/compositera");
 
 export default function ProductPage() {
   return (
     <>
-      <PageHero variant="hero-carbon" eyebrow="ADVANCED COMPOSITE ENGINEERING" title="CompositERA — From Concept to Composite." description="CompositERA 是 EZeeTech 旗下的先進複合材料工程產品線，結合結構設計、FEA、DFM 與快速打樣資源，協助無人機、機器人及硬體研發團隊開發可分析、可製造、可驗證的輕量化零件。" breadcrumb={[{label:"產品與解決方案",href:"/solutions"},{label:"CompositERA"}]}>
+      <PageHero variant="hero-carbon" eyebrow="ADVANCED COMPOSITE ENGINEERING" title="CompositeERA — From Concept to Composite." description="CompositeERA 是 EZeeTech 旗下的先進複合材料工程產品線，結合結構設計、FEA、DFM 與快速打樣資源，協助無人機、機器人及硬體研發團隊開發可分析、可製造、可驗證的輕量化零件。" breadcrumb={[{label:"產品與解決方案",href:"/solutions"},{label:"CompositeERA"}]}>
         <div className="button-row"><Link href="/contact?type=compositera" className="btn btn-primary">討論您的開發需求 ↗</Link><Link href="#services" className="btn btn-ghost">了解服務內容</Link></div>
       </PageHero>
 
@@ -53,7 +53,7 @@ export default function ProductPage() {
                 </div>
               </div>
               <p className="text-slate-700 font-medium mt-8 text-center">
-                CompositERA 致力於讓專業複合材料工程資源更容易被新創與硬體研發團隊取得。
+                CompositeERA 致力於讓專業複合材料工程資源更容易被新創與硬體研發團隊取得。
               </p>
             </AnimateOnScroll>
           </div>
@@ -167,7 +167,6 @@ export default function ProductPage() {
               </div>
             </AnimateOnScroll>
           </div>
-          <p className="application-note">圖片為應用情境示意，非本公司實績或合作背書。</p>
         </Container>
       </section>
 
@@ -250,7 +249,7 @@ export default function ProductPage() {
 
       <section id="compositeos"><Container className="section-space"><CompositeOSPreview/></Container></section>
 
-      <CTASection title="Let’s Build Your Next Composite." description="從零件設計、模擬到打樣驗證，一起討論適合您開發階段的工程方案。" href="/contact?type=compositera" label="洽詢 CompositERA 合作" />
+      <CTASection title="Let’s Build Your Next Composite." description="從零件設計、模擬到打樣驗證，一起討論適合您開發階段的工程方案。" href="/contact?type=compositera" label="洽詢 CompositeERA 合作" />
     </>
   );
 }

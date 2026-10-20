@@ -14,4 +14,4 @@ Attribution is optional. Do not imply endorsement by depicted people or brands, 
 | research.jpg | Willquezada | https://www.pexels.com/photo/technician-at-work-11679113/ |
 | mobility.jpg | Luke Miller | https://www.pexels.com/photo/white-car-on-winding-road-by-sea-27692127/ |
 
-Files are locally hosted compressed 1000px-wide downloads. Next Image generates responsive versions. CSS crops to 16:10; the autonomous image is positioned near the bottom to focus on the mobile chassis instead of signage, faces or branding. Cards are explicitly labeled as application illustrations, not company projects or endorsements.
+Files are locally hosted compressed 1000px-wide downloads. Next Image generates responsive versions. CSS crops to 16:10; the autonomous image is positioned near the bottom to focus on the mobile chassis instead of signage, faces or branding. These stock photos illustrate application categories; they are not evidence of company projects or endorsements. The visible caption was removed at the user's request.
