@@ -22,6 +22,12 @@ const envLocal = loadEnvLocal();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [
+      { source: "/product", destination: "/solutions", statusCode: 301 },
+      { source: "/index.html", destination: "/", statusCode: 301 },
+    ];
+  },
   turbopack: {
     root: __dirname,
   },

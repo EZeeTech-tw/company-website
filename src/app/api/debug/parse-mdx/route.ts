@@ -3,13 +3,13 @@ import fs from 'fs';
 import path from 'path';
 
 // 解析 MDX frontmatter
-function parseMDX(content: string): { frontmatter: any; content: string } {
+function parseMDX(content: string): { frontmatter: Record<string, string>; content: string } {
   const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
   
   if (frontmatterMatch) {
     try {
       const frontmatterText = frontmatterMatch[1];
-      const frontmatter: any = {};
+      const frontmatter: Record<string, string> = {};
       
       // 改進的 YAML 解析
       frontmatterText.split('\n').forEach(line => {
@@ -43,6 +43,7 @@ function parseMDX(content: string): { frontmatter: any; content: string } {
 }
 
 export async function GET() {
+  if (process.env.NODE_ENV === 'production') return new Response(null, { status: 404 });
   try {
     const filePath = path.join(process.cwd(), 'content', 'news', '2025-03-21-youth-command.mdx');
     const content = fs.readFileSync(filePath, 'utf8');
@@ -55,10 +56,10 @@ export async function GET() {
       contentPreview: cleanContent.substring(0, 200) + '...',
       rawFrontmatter: content.match(/^---\n([\s\S]*?)\n---/)?.[1]
     });
-  } catch (error: any) {
+  } catch (error) {
     return NextResponse.json({ 
-      error: error?.message || 'Unknown error',
-      stack: error?.stack || 'No stack trace'
+      error: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : 'No stack trace'
     }, { status: 500 });
   }
 }

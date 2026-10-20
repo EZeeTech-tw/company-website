@@ -1,36 +1,6 @@
 import { Container } from "@/components/Container";
 import { PageHero } from "@/components/PageHero";
-import { AnimateOnScroll } from "@/components/AnimateOnScroll";
-
-export default function TechnologyPage() {
-  return (
-    <>
-      <PageHero
-        title="技術與差異化"
-        description="技術策略強調可靠性、可量測性與可擴展性，以實際部署與數據驗證為核心。"
-      />
-      <section className="w-full bg-white">
-        <Container className="py-12 md:py-16">
-          <AnimateOnScroll animation="fade-up">
-          <blockquote className="border-l-4 border-cyan-500 bg-slate-50 rounded-r-lg py-4 px-6 mb-10 text-slate-700 italic max-w-4xl">
-            我們的「領先」來自於實地測試經驗、系統整合能力與數據驗證成果，
-            而非僅止於實驗室條件下的理論表現。
-          </blockquote>
-          <h2 className="text-xl font-semibold text-slate-900 mb-4">
-            核心差異包括：
-          </h2>
-          <ul className="list-disc pl-6 text-slate-600 space-y-2 mb-8 max-w-4xl">
-            <li>以實際部署條件為出發點的系統級設計</li>
-            <li>以數據驗證為核心，而非僅止於實驗室測試</li>
-            <li>模組化架構，支援分階段導入與擴充</li>
-            <li>PoC 與試點階段即與合作夥伴密切協作</li>
-          </ul>
-          <p className="text-slate-600 leading-relaxed max-w-4xl">
-            此作法可協助決策者在導入前即掌握真實運作數據，降低不確定性並提升後續擴大部署的成功率。
-          </p>
-          </AnimateOnScroll>
-        </Container>
-      </section>
-    </>
-  );
-}
+import { SectionHeader, FeatureCard, SolutionsGrid, CTASection } from "@/components/SiteSections";
+import { pageMetadata } from "@/lib/site";
+export const metadata = pageMetadata("工程能力｜設計、模擬與驗證", "宜智科技整合工程設計、數位模擬、原型測試與系統整合，支援 CompositERA 複合材料開發與 SSERS 懸吊能量回收研發。", "/technology");
+export default function TechnologyPage(){return <><PageHero title="Engineering with Evidence." eyebrow="OUR ENGINEERING CAPABILITIES" description="以需求為起點、以可量測的結果為依據，建立能從構想走向應用的工程流程。" breadcrumb={[{label:"工程能力"}]}/><section><Container className="section-space"><SectionHeader eyebrow="DESIGN · SIMULATE · VALIDATE" title="讓設計、製造與驗證相互銜接。"/><div className="grid md:grid-cols-2 gap-6">{[["系統級設計","從實際使用條件定義功能、介面與限制，建立可分階段驗證的工程方案。"],["數位模擬與分析","依據材料、載荷與邊界條件分析結構或系統反應，支援不同方案的比較。"],["原型測試與數據驗證","規劃測試條件、蒐集運作數據，區分模擬預測與實際量測結果。"],["協作與整合","從概念驗證階段與合作夥伴討論整合條件，以模組化思維支援後續調整。"]].map(([title,description])=><FeatureCard key={title} title={title}><p>{description}</p></FeatureCard>)}</div></Container></section><section className="bg-white border-y"><Container className="section-space"><SectionHeader eyebrow="APPLIED ENGINEERING" title="共同能力，不同技術方向。"/><SolutionsGrid/></Container></section><CTASection/></>;}

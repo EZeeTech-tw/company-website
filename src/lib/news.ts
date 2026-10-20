@@ -10,6 +10,9 @@ export interface NewsMeta {
   excerpt?: string;
   /** 首頁卡片用精選圖，可選填；未填則從內文擷取第一張圖 */
   image?: string;
+  /** 是否在新聞列表中隱藏 */
+  hidden?: boolean;
+  category: "Company" | "CompositERA" | "SSERS" | "Awards" | "Partnerships";
 }
 
 export interface NewsItem {
@@ -23,6 +26,19 @@ export interface NewsPost extends NewsItem {
 
 function getSlugFromFilename(filename: string): string {
   return filename.replace(/\.mdx?$/, "");
+}
+
+// Categorize original records; never relabel historical energy work as composites.
+function categoryFor(data: Record<string, unknown>): NewsMeta["category"] {
+  const allowed = ["Company", "CompositERA", "SSERS", "Awards", "Partnerships"];
+  if (typeof data.category === "string" && allowed.includes(data.category)) return data.category as NewsMeta["category"];
+  const text = `${data.title ?? ""} ${data.excerpt ?? ""}`;
+  if (/產業發展獎勵補助/.test(text)) return "Company";
+  if (/冠軍|第三名|獲頒|獎/.test(text)) return "Awards";
+  if (/合作|備忘錄/.test(text)) return "Partnerships";
+  if (/CompositERA|CompositeOS/i.test(text)) return "CompositERA";
+  if (/SSERS|PESA|能量回收|震動電能|振動/.test(text)) return "SSERS";
+  return "Company";
 }
 
 /** 從 MDX 內文擷取第一張圖片網址（markdown、img src、TwoPhotoGrid leftSrc/rightSrc） */
@@ -51,14 +67,17 @@ export function getNewsList(): NewsItem[] {
         date: (data.date as string) ?? "",
         excerpt: data.excerpt as string | undefined,
         image,
+        hidden: (data.hidden as boolean) ?? false,
+        category: categoryFor(data),
       },
     };
   });
   items.sort((a, b) => (b.meta.date > a.meta.date ? 1 : -1));
-  return items;
+  return items.filter((item) => !item.meta.hidden);
 }
 
 export function getNewsBySlug(slug: string): NewsPost | null {
+  if (!getNewsSlugs().includes(slug)) return null;
   const fullPath = path.join(CONTENT_DIR, `${slug}.mdx`);
   if (!fs.existsSync(fullPath)) return null;
   const raw = fs.readFileSync(fullPath, "utf-8");
@@ -69,6 +88,9 @@ export function getNewsBySlug(slug: string): NewsPost | null {
       title: (data.title as string) ?? slug,
       date: (data.date as string) ?? "",
       excerpt: data.excerpt as string | undefined,
+      image: (data.image as string | undefined) ?? extractFirstImage(content),
+      hidden: (data.hidden as boolean) ?? false,
+      category: categoryFor(data),
     },
     content,
   };

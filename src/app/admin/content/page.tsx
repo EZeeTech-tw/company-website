@@ -18,10 +18,7 @@ export default function ContentManagement() {
   const router = useRouter()
 
   useEffect(() => {
-    fetchContents()
-  }, [])
-
-  const fetchContents = async () => {
+    const fetchContents = async () => {
     try {
       const response = await fetch('/api/admin/content')
       if (response.ok) {
@@ -30,12 +27,14 @@ export default function ContentManagement() {
       } else {
         setError('獲取內容失敗')
       }
-    } catch (error) {
+    } catch {
       setError('網路錯誤')
     } finally {
       setLoading(false)
     }
-  }
+    }
+    void fetchContents()
+  }, [])
 
   const handleDelete = async (filename: string) => {
     if (!confirm(`確定要刪除 ${filename} 嗎？`)) {
@@ -54,7 +53,7 @@ export default function ContentManagement() {
       } else {
         setError('刪除失敗')
       }
-    } catch (error) {
+    } catch {
       setError('網路錯誤')
     }
   }

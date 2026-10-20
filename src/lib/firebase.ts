@@ -6,7 +6,8 @@ import {
   signInWithPopup,
   signOut,
   onAuthStateChanged as firebaseOnAuthStateChanged,
-  type Auth
+  type Auth,
+  type User
 } from 'firebase/auth'
 import { getFirestore, type Firestore } from 'firebase/firestore'
 
@@ -93,7 +94,7 @@ export async function signOutUser() {
 }
 
 // 監聽認證狀態
-export function onAuthStateChanged(callback: (user: any) => void) {
+export function onAuthStateChanged(callback: (user: User | null) => void) {
   return firebaseOnAuthStateChanged(getClientAuth(), callback)
 }
 

@@ -2,6 +2,7 @@
  * 雙圖網格：兩張照片統一 16:9 比例、object-cover 填滿，保留圖片說明。
  * 適用於最新消息內有兩張照片的文章。
  */
+import Image from "next/image";
 interface TwoPhotoGridProps {
   leftSrc: string;
   leftAlt: string;
@@ -24,9 +25,12 @@ export function TwoPhotoGrid({
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-4 min-w-0">
       <figure className="m-0 min-w-0 overflow-hidden">
         <div className="overflow-hidden rounded-lg aspect-[4/3] bg-slate-100">
-          <img
+          <Image
             src={leftSrc}
             alt={leftAlt}
+            width={640}
+            height={480}
+            unoptimized
             className="w-full h-full object-cover object-center rounded-lg"
           />
         </div>
@@ -36,9 +40,12 @@ export function TwoPhotoGrid({
       </figure>
       <figure className="m-0 min-w-0 overflow-hidden">
         <div className="overflow-hidden rounded-lg aspect-[4/3] bg-slate-100">
-          <img
+          <Image
             src={rightSrc}
             alt={rightAlt}
+            width={640}
+            height={480}
+            unoptimized
             className="w-full h-full object-cover object-center rounded-lg"
           />
         </div>

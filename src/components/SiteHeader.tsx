@@ -1,74 +1,19 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
-import { Container } from "@/components/Container";
-
+import { usePathname } from "next/navigation";
+import { useRef, useState } from "react";
+import { Container } from "./Container";
+const links = [["/", "首頁"], ["/solutions", "產品與解決方案"], ["/about", "關於我們"], ["/news", "最新消息"], ["/contact", "聯絡我們"]] as const;
 export function SiteHeader() {
-  return (
-    <header className="border-b border-slate-200 bg-white">
-      <Container className="py-4">
-        <nav className="flex flex-wrap items-center justify-between gap-3 sm:gap-4">
-          <Link href="/" className="flex items-center gap-3">
-            <Image
-              src="/news/EZeeTech logo_未去背 (1).png"
-              alt="EZeeTech"
-              width={126}
-              height={42}
-              className="h-8 w-auto object-contain"
-              priority
-            />
-          </Link>
-          <ul className="flex flex-wrap gap-4 sm:gap-6 text-sm text-slate-600">
-            <li>
-              <Link 
-                href="/" 
-                className="hover:text-slate-900 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-cyan-500/20 hover:bg-cyan-50/50 px-2 py-1 rounded-md"
-              >
-                首頁
-              </Link>
-            </li>
-            <li>
-              <Link 
-                href="/news" 
-                className="hover:text-slate-900 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-cyan-500/20 hover:bg-cyan-50/50 px-2 py-1 rounded-md"
-              >
-                最新消息
-              </Link>
-            </li>
-            <li>
-              <Link 
-                href="/technology" 
-                className="hover:text-slate-900 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-cyan-500/20 hover:bg-cyan-50/50 px-2 py-1 rounded-md"
-              >
-                技術與差異化
-              </Link>
-            </li>
-            <li>
-              <Link 
-                href="/product" 
-                className="hover:text-slate-900 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-cyan-500/20 hover:bg-cyan-50/50 px-2 py-1 rounded-md"
-              >
-                產品／解決方案
-              </Link>
-            </li>
-            <li>
-              <Link 
-                href="/about" 
-                className="hover:text-slate-900 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-cyan-500/20 hover:bg-cyan-50/50 px-2 py-1 rounded-md"
-              >
-                關於我們
-              </Link>
-            </li>
-            <li>
-              <Link 
-                href="/contact" 
-                className="hover:text-slate-900 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-cyan-500/20 hover:bg-cyan-50/50 px-2 py-1 rounded-md"
-              >
-                聯絡我們
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      </Container>
-    </header>
-  );
+ const pathname = usePathname();
+ const [openFor, setOpenFor] = useState<string | null>(null);
+ const isOpen = openFor === pathname;
+ const toggleRef = useRef<HTMLButtonElement>(null);
+ return <header className="site-header" onKeyDown={e => { if (e.key === "Escape") { setOpenFor(null); toggleRef.current?.focus(); } }}>
+ <Container><nav className="main-nav" aria-label="主要導覽">
+ <Link href="/" aria-label="EZeeTech 宜智科技首頁" onClick={() => setOpenFor(null)} className="brand-logo"><Image src="/news/EZeeTech logo_未去背 (1).png" alt="EZeeTech" width={210} height={40} priority unoptimized /></Link>
+ <button ref={toggleRef} className="menu-toggle" aria-expanded={isOpen} aria-controls="site-navigation" aria-label={isOpen ? "關閉導覽選單" : "開啟導覽選單"} onClick={() => setOpenFor(isOpen ? null : pathname)}><span aria-hidden="true">{isOpen ? "✕" : "☰"}</span><span>選單</span></button>
+ <ul id="site-navigation" className={`nav-links ${isOpen ? "is-open" : ""}`}>{links.map(([href, label]) => <li key={href}><Link href={href} onClick={() => setOpenFor(null)} aria-current={(href === "/" ? pathname === "/" : pathname.startsWith(href)) ? "page" : undefined}>{label}</Link></li>)}</ul>
+ </nav></Container></header>;
 }

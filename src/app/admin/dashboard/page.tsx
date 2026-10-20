@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { getCurrentAdminUser, signOutAdmin, AdminUser } from '@/lib/auth-firebase'
+import { onAdminAuthStateChanged, signOutAdmin, AdminUser } from '@/lib/auth-firebase'
+import Image from 'next/image'
 
 export default function AdminDashboard() {
   const [user, setUser] = useState<AdminUser | null>(null)
@@ -10,13 +11,14 @@ export default function AdminDashboard() {
   const router = useRouter()
 
   useEffect(() => {
-    const currentUser = getCurrentAdminUser()
+    return onAdminAuthStateChanged((currentUser) => {
     if (currentUser) {
       setUser(currentUser)
     } else {
       router.push('/admin')
     }
     setLoading(false)
+    })
   }, [router])
 
   const handleSignOut = async () => {
@@ -58,9 +60,12 @@ export default function AdminDashboard() {
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2">
                 {user.photoURL && (
-                  <img 
+                  <Image
                     src={user.photoURL} 
                     alt={user.displayName}
+                    width={32}
+                    height={32}
+                    unoptimized
                     className="w-8 h-8 rounded-full"
                   />
                 )}

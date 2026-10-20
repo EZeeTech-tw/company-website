@@ -1,30 +1,9 @@
-import { MetadataRoute } from 'next'
-
+import type { MetadataRoute } from "next";
+import { getNewsList } from "@/lib/news";
+import { siteUrl } from "@/lib/site";
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: 'https://www.ezeetech.tw',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 1,
-    },
-    {
-      url: 'https://www.ezeetech.tw/product',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://www.ezeetech.tw/technology',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://www.ezeetech.tw/news',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.7,
-    },
-  ]
+ return [
+  ...["","/solutions","/solutions/compositera","/solutions/ssers","/about","/technology","/news","/contact"].map(path=>({url:siteUrl+path,changeFrequency:"monthly" as const,priority:path?0.8:1})),
+  ...getNewsList().map(post=>({url:`${siteUrl}/news/${post.slug}`,changeFrequency:"yearly" as const,priority:0.6})),
+ ];
 }

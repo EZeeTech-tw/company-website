@@ -1,220 +1,32 @@
-
 import Link from "next/link";
-import Image from "next/image";
+import { ApplicationPhoto } from "@/components/ApplicationPhoto";
+import { LogoMarquee } from "@/components/LogoMarquee";
+import { CompositeOSPreview } from "@/components/CompositeOSPreview";
 import { Container } from "@/components/Container";
-import { AnimateOnScroll } from "@/components/AnimateOnScroll";
-import { IconPoC, IconData, IconIntegrate } from "@/components/Icons";
-import { VideoCarousel } from "@/components/VideoCarousel";
+import { PageHero } from "@/components/PageHero";
+import { CTASection, FeatureCard, SectionHeader, SolutionCard } from "@/components/SiteSections";
+import { NewsCard } from "@/components/NewsCard";
 import { getNewsList } from "@/lib/news";
-
+import { defaultDescription, pageMetadata, solutions } from "@/lib/site";
+export const metadata = pageMetadata("先進工程技術與創新研發", defaultDescription, "/");
 export default function HomePage() {
-  const newsItems = getNewsList().slice(0, 8);
-  const heroVideos = [
-    "/news/istockphoto-2234949746-640_adpp_is.mp4",
-    "/news/v2_awv-3390f6cfffadcfa5.mp4"
-  ];
-  return (
-    <>
-      {/* Hero: 全寬、16:9 比例、科技風背景 */}
-      <section className="relative w-full aspect-[16/10] sm:aspect-[16/9] md:aspect-[16/8] lg:aspect-[16/7] min-h-[50vh] sm:min-h-[55vh] md:min-h-[60vh] flex items-center justify-center overflow-hidden">
-        {/* 背景影片輪播 */}
-        <div className="absolute inset-0 bg-slate-950">
-          <VideoCarousel videos={heroVideos} />
-          <div
-            className="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-slate-900/40 to-slate-950/60"
-            aria-hidden
-          />
-          {/* 會動的網格背景（向下斜向滾動） */}
-          <div
-            className="absolute inset-0 hero-grid-animate opacity-80"
-            style={{
-              backgroundImage: `
-                linear-gradient(rgba(6,182,212,.2) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(6,182,212,.2) 1px, transparent 1px)
-              `,
-              backgroundSize: "60px 60px",
-            }}
-            aria-hidden
-          />
-          {/* 流動光帶（明顯橫向移動） */}
-          <div
-            className="absolute inset-0 opacity-30 hero-shimmer-layer"
-            style={{
-              background: "linear-gradient(90deg, transparent 0%, rgba(6,182,212,0.15) 25%, rgba(6,182,212,0.25) 50%, rgba(6,182,212,0.15) 75%, transparent 100%)",
-              backgroundSize: "200% 100%",
-              animation: "hero-shimmer 6s linear infinite",
-            }}
-            aria-hidden
-          />
-        </div>
-
-        <div className="relative z-10 w-full max-w-[1400px] min-w-0 px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20">
-          <div className="max-w-3xl">
-            {/* 左側文字內容 */}
-            <div className="text-left">
-              <h1 className="hero-title-animate text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight mb-6 drop-shadow-lg" style={{ fontFamily: 'PROJECT9, sans-serif', textShadow: "0 0 40px rgba(6,182,212,0.3)" }}>
-                EZeeTech
-              </h1>
-              <p className="hero-desc-1 text-lg sm:text-xl text-white max-w-2xl leading-relaxed mb-4">
-                專注於車用電池系統之解決方案，
-                提供領先的車用應用驗證與試點解決方案。
-              </p>
-              <p className="hero-desc-2 text-slate-200 max-w-xl text-sm sm:text-base mb-10">
-                與公部門及產業夥伴合作，透過實地測試、試點計畫與數據驗證，
-                讓創新技術真正落地、可評估、可擴展。
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                <Link
-                  href="/contact"
-                  className="hero-btn-primary w-full sm:w-auto px-6 py-3 bg-cyan-500 text-white font-medium rounded-lg hover:bg-cyan-400 shadow-lg shadow-cyan-500/25 text-center"
-                >
-                  聯絡我們
-                </Link>
-                <Link
-                  href="/news"
-                  className="hero-btn-secondary w-full sm:w-auto px-6 py-3 bg-white/10 text-white font-medium rounded-lg border border-white/30 backdrop-blur-sm text-center"
-                >
-                  最新消息
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 主要服務重點：全寬區塊 */}
-      <section className="w-full bg-slate-50 border-t border-slate-200">
-        <Container className="py-16 md:py-20">
-          <AnimateOnScroll animation="fade-up">
-            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-10 text-center">
-              主要服務重點
-            </h2>
-          </AnimateOnScroll>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 min-w-0">
-            <AnimateOnScroll animation="fade-up" delay={0}>
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition">
-              <div className="w-12 h-12 rounded-xl bg-cyan-100 flex items-center justify-center mb-4 text-cyan-600">
-                <IconPoC className="w-6 h-6" />
-              </div>
-              <h3 className="text-lg font-semibold text-slate-900 mb-2">
-                技術概念驗證與實地測試
-              </h3>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                在實際場域驗證技術可行性，產出可量測數據與評估報告。
-              </p>
-            </div>
-            </AnimateOnScroll>
-            <AnimateOnScroll animation="fade-up" delay={100}>
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition">
-              <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center mb-4 text-slate-600">
-                <IconData className="w-6 h-6" />
-              </div>
-              <h3 className="text-lg font-semibold text-slate-900 mb-2">
-                效能數據蒐集與分析
-              </h3>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                系統化蒐集與分析關鍵效能指標，支援決策與優化。
-              </p>
-            </div>
-            </AnimateOnScroll>
-            <AnimateOnScroll animation="fade-up" delay={200}>
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition">
-              <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center mb-4 text-slate-600">
-                <IconIntegrate className="w-6 h-6" />
-              </div>
-              <h3 className="text-lg font-semibold text-slate-900 mb-2">
-                系統整合與部署可行性評估
-              </h3>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                評估與既有系統、流程整合的可行性，降低部署風險。
-              </p>
-            </div>
-            </AnimateOnScroll>
-          </div>
-        </Container>
-      </section>
-
-      {/* 最新消息 */}
-      <section className="w-full bg-white border-t border-slate-200">
-        <Container className="py-16 md:py-20">
-          <AnimateOnScroll animation="fade-up">
-            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-10 text-center">
-              最新消息
-            </h2>
-          </AnimateOnScroll>
-          {newsItems.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 min-w-0 items-stretch">
-              {newsItems.map(({ slug, meta }, index) => (
-                <AnimateOnScroll key={slug} animation="fade-up" delay={index * 80} className="h-full min-h-0">
-                  <Link
-                    href={`/news/${slug}`}
-                    className="block bg-white rounded-xl border border-slate-100 hover:border-slate-200 hover:shadow-lg transition overflow-hidden h-full flex flex-col"
-                  >
-                    <div className="aspect-video bg-slate-100 overflow-hidden shrink-0">
-                      {meta.image ? (
-                        <Image
-                          src={meta.image}
-                          alt={meta.title}
-                          width={400}
-                          height={300}
-                          className="w-full h-full object-cover object-top"
-                        />
-                      ) : (
-                        <div
-                          className="w-full h-full bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center"
-                          aria-hidden
-                        >
-                          <span className="text-slate-400 text-4xl font-light">
-                            EZ
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                    <div className="p-5 flex flex-col flex-1 min-h-[160px]">
-                      <h3 className="text-base font-semibold text-slate-900 line-clamp-2 mb-2">
-                        {meta.title}
-                      </h3>
-                      {meta.excerpt && (
-                        <p className="text-slate-600 text-sm leading-relaxed line-clamp-2 flex-1">
-                          {meta.excerpt}
-                        </p>
-                      )}
-                      <span className="mt-4 inline-flex items-center text-cyan-600 text-sm font-medium hover:text-cyan-500 transition">
-                        閱讀更多 →
-                      </span>
-                    </div>
-                  </Link>
-                </AnimateOnScroll>
-              ))}
-            </div>
-          ) : (
-            <AnimateOnScroll animation="fade-up">
-              <p className="text-slate-600 text-center">目前尚無消息。</p>
-            </AnimateOnScroll>
-          )}
-          {newsItems.length > 0 && (
-            <AnimateOnScroll animation="fade-up" className="text-center mt-10">
-              <Link
-                href="/news"
-                className="inline-flex px-6 py-3 rounded-lg border border-cyan-500 text-cyan-600 font-medium hover:bg-cyan-50 transition"
-              >
-                查看全部消息
-              </Link>
-            </AnimateOnScroll>
-          )}
-        </Container>
-      </section>
-
-      {/* 隱藏的管理員入口 */}
-      <div className="fixed bottom-4 right-4 z-50">
-        <Link
-          href="/admin"
-          className="text-slate-400 hover:text-slate-600 text-xs transition-colors duration-200"
-          aria-label="管理員登入"
-        >
-          Admin
-        </Link>
-      </div>
-    </>
-  );
+ const news = getNewsList().slice(0,3);
+ return <>
+ <PageHero variant="hero-carbon home-hero" eyebrow="ADVANCED ENGINEERING TECHNOLOGIES" title="Engineering Ideas. Delivering Impact." description={<><p className="hero-subtitle">工程驅動創新，技術創造價值。</p><p>EZeeTech｜宜智科技股份有限公司是一家先進工程技術公司。從複合材料結構到機電能源系統，我們整合工程設計、數位模擬與實際驗證，讓創新構想走向產業應用。</p></>}>
+ <div className="button-row"><Link href="/solutions" className="btn btn-primary">探索兩大產品線 ↗</Link><Link href="/contact" className="btn btn-ghost">討論工程需求</Link></div>
+ <div className="hero-footer"><span>COMPOSITE ENGINEERING</span><span>ENERGY RECOVERY</span><span>DESIGN · SIMULATE · VALIDATE</span></div>
+ </PageHero>
+ <LogoMarquee/>
+ <section><Container className="section-space"><SectionHeader eyebrow="COMPOSITE ENGINEERING" title="從複材工程，到自動化分析。" description="結合 CompositERA 工程服務與 CompositeOS Agent，串聯設計、分析與交付。"/><div className="solutions-feature"><SolutionCard solution={solutions[0]}/><CompositeOSPreview/></div></Container></section>
+ <section className="bg-white border-y"><Container className="section-space"><SectionHeader eyebrow="CORE ENGINEERING CAPABILITIES" title="From Ideas to Real-World Applications." description="從需求定義到實際驗證，串起每一個開發階段。"/><div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">{[["工程設計","釐清需求與邊界條件，建立材料、機構與系統設計方案。"],["模擬與分析","以數位模型比較方案，支援結構評估與研發決策。"],["原型與驗證","透過打樣、量測與測試，持續驗證與改良設計。"],["系統整合","銜接結構、機電、製程與使用情境，推進實際應用。"]].map(([title,description])=><FeatureCard key={title} title={title}><p>{description}</p></FeatureCard>)}</div></Container></section>
+ <section><Container className="section-space"><SectionHeader eyebrow="INDUSTRIES & APPLICATIONS" title="Engineering Across Industries." description="以工程能力為基礎，探索先進材料與能源技術的應用。"/><div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">{([
+   ["無人載具","輕量化結構、設備托架與快速迭代。","drone"],
+   ["機器人","承載零件、結構分析與製造可行性。","robotics"],
+   ["交通與移動載具","懸吊運動、能源回收與車載系統整合。","mobility"],
+   ["產業工程","設備結構、模擬分析與原型驗證。","research"],
+ ] as const).map(([title,description,kind])=><div key={title} className="feature-card application-card"><ApplicationPhoto kind={kind}/><h3>{title}</h3><p className="text-slate-600">{description}</p></div>)}</div><p className="application-note">圖片為應用情境示意，非本公司實績或合作背書。</p></Container></section>
+ <section className="bg-white border-y"><Container className="section-space grid md:grid-cols-2 gap-12"><SectionHeader eyebrow="ABOUT EZEETECH" title="Built by Engineers. Driven by Curiosity."/><div className="space-y-5 text-slate-600"><p>宜智科技創立於 2025 年，起源於校園工程研究與技術開發，以 SSERS 振動能量回收研究為早期核心。</p><p>隨著工程能力與產業需求拓展，我們發展 CompositERA，將研發能力延伸至先進複合材料、結構設計與研發數位化。</p><Link href="/about" className="text-link inline-block">認識我們的故事 ↗</Link></div></Container></section>
+ <section><Container className="section-space"><SectionHeader eyebrow="LATEST NEWS" title="Our Journey in Engineering." description="技術研究、企業進展與合作紀錄。"/><div className="grid md:grid-cols-3 gap-6">{news.map(item=><NewsCard key={item.slug} item={item}/>)}</div>{!news.length && <p className="empty-state">目前尚無消息。</p>}<Link href="/news" className="btn btn-secondary mt-8">查看全部消息 ↗</Link></Container></section>
+ <CTASection/>
+ </>;
 }
