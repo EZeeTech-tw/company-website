@@ -80,6 +80,15 @@
 .bg-slate-950 .eyebrow { color:#93c5fd; }
 .home-hero { min-height:640px; display:flex; align-items:center; }
 .home-hero h1 { font-size:clamp(2.5rem,5.5vw,4.75rem); max-width:60rem; }
+.hero-glow { position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; --glow-play:paused; mask-image:linear-gradient(to bottom,transparent 8%,#000 70%); }
+.hero-glow>span { position:absolute; display:block; will-change:transform,opacity; animation-play-state:var(--glow-play)!important; }
+.hero-glow-blue { left:0; bottom:-24%; width:90%; height:85%; background:radial-gradient(ellipse at center,rgb(14 165 233 / .7),rgb(37 99 235 / .4) 30%,transparent 67%); animation:hero-blue-drift 6s ease-in-out infinite alternate; }
+.hero-glow-violet { right:-10%; bottom:-15%; width:85%; height:95%; background:radial-gradient(ellipse at center,rgb(139 92 246 / .7),rgb(79 70 229 / .3) 35%,transparent 68%); animation:hero-violet-drift 8s ease-in-out infinite alternate; }
+.hero-glow-edge { left:-30%; right:-30%; bottom:-1px; height:3px; background:linear-gradient(90deg,transparent 10%,#22d3ee 35%,#2563eb 50%,#c084fc 65%,transparent 90%); animation:hero-edge-drift 5s ease-in-out infinite alternate; }
+.home-hero::after { background:linear-gradient(90deg,rgb(11 18 32 / .88),rgb(11 18 32 / .55) 48%,rgb(11 18 32 / .12)); }
+@keyframes hero-blue-drift { from { transform:translate3d(-30%,12%,0) rotate(-10deg) scale(.85); opacity:.45; } to { transform:translate3d(42%,-12%,0) rotate(12deg) scale(1.15); opacity:1; } }
+@keyframes hero-violet-drift { from { transform:translate3d(25%,-8%,0) rotate(12deg) scale(1.1); opacity:1; } to { transform:translate3d(-45%,20%,0) rotate(-12deg) scale(.9); opacity:.4; } }
+@keyframes hero-edge-drift { from { transform:translateX(-25%); opacity:.5; } to { transform:translateX(25%); opacity:1; } }
 .hero-subtitle { font-size:clamp(1.125rem,2vw,1.5rem); color:white; margin-bottom:1.25rem; }
 .hero-footer { margin-top:3rem; padding-top:1.5rem; border-top:1px solid #334155; display:flex; gap:2rem; flex-wrap:wrap; font-size:.75rem; letter-spacing:.1em; color:#cbd5e1; }
 .solution-card { display:flex; flex-direction:column; border:1px solid var(--border); border-radius:var(--radius); background:white; overflow:hidden; }
