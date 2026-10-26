@@ -80,7 +80,7 @@ export function CompositeOSPreview() {
     return ()=>{observer.disconnect();cancelAnimationFrame(frame);motion.removeEventListener("change",sync);document.removeEventListener("visibilitychange",sync);};
   },[]);
   return <div className="agent-showcase agent-autoplay" ref={root}>
-    <div className="agent-intro"><div><p className="eyebrow">COMPOSITEOS / AGENT PLATFORM</p><h3>專注工程設計。<br/>把複材分析流程交給 <strong>Composite OS</strong></h3></div></div>
+    <div className="agent-intro"><div><p className="eyebrow">COMPOSITA OS / AGENT PLATFORM</p><h3>專注工程設計。<br/>把複材分析流程交給 <strong>Composita OS</strong></h3></div></div>
     <div className="auto-agent-layout">
       <div className="auto-feed" aria-hidden="true">
         {[0,1,2,3,4,5].map(offset=>{
@@ -102,6 +102,6 @@ export function CompositeOSPreview() {
       </div>
     </div>
     <p className="sr-only">規劃流程：{stages.map(stage=>stage.title).join("、")}。</p>
-    <p className="agent-positioning">以 Agent 串聯 CAD 準備、複材建模、模擬、失效評估與交付。CompositeOS 是 CompositeERA 旗下開發中的平台。</p>
+    <p className="agent-positioning">以 Agent 串聯 CAD 準備、複材建模、模擬、失效評估與交付。Composita OS 是 Composita 旗下開發中的平台。</p>
   </div>;
 }

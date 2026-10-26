@@ -13,8 +13,8 @@ export async function POST(request: Request) {
   if(!process.env.RESEND_API_KEY) return Response.json({error:"線上寄信服務尚未啟用。請寄信至 info@ezeetech.tw，您的資料尚未送出。"},{status:503});
   const type=isInquiryType(data.inquiryType)?data.inquiryType:"other";
   const labels:Record<string,string>={name:"姓名",company:"公司",email:"Email",projectDescription:"專案描述",componentType:"零件類型",developmentStage:"開發階段",applicationType:"車輛 / 應用類型",partnershipObjective:"合作目標",technicalRequirements:"技術需求",additionalInfo:"其他資訊"};
-  const fields=["name","company","email","projectDescription",...(type==="compositera"?["componentType","developmentStage"]:type==="ssers"?["applicationType","partnershipObjective","technicalRequirements"]:[]),"additionalInfo"];
-  const text=[`詢問類型：${inquiryTypes[type]}`,...fields.map(key=>`${labels[key]}：${typeof data[key]==="string"?data[key]:""}`),...(type==="compositera"?[`需求服務：${(data.services as string[]).join("、")}`]:[])].join("\n\n");
+  const fields=["name","company","email","projectDescription",...(type==="composita"?["componentType","developmentStage"]:type==="ssers"?["applicationType","partnershipObjective","technicalRequirements"]:[]),"additionalInfo"];
+  const text=[`詢問類型：${inquiryTypes[type]}`,...fields.map(key=>`${labels[key]}：${typeof data[key]==="string"?data[key]:""}`),...(type==="composita"?[`需求服務：${(data.services as string[]).join("、")}`]:[])].join("\n\n");
   const result=await new Resend(process.env.RESEND_API_KEY).emails.send({
    from:"noreply@ezeetech.tw",
    to:["info@ezeetech.tw","info.ezeetech.sustain@gmail.com","ezeetech.2025@gmail.com"],

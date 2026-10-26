@@ -53,7 +53,7 @@ export default function RootLayout({
           name: brandName, url: siteUrl, description: defaultDescription,
           logo: `${siteUrl}/news/EZeeTech.png`, email: "info@ezeetech.tw",
           foundingDate: "2025",
-          brand: [{ "@type": "Brand", name: "CompositeERA" }, { "@type": "Brand", name: "SSERS" }],
+          brand: [{ "@type": "Brand", name: "Composita" }, { "@type": "Brand", name: "SSERS" }],
         }).replace(/</g, "\\u003c") }} />
         <a href="#main-content" className="skip-link">
           跳至主要內容

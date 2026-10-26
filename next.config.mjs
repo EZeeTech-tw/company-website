@@ -24,6 +24,8 @@ const envLocal = loadEnvLocal();
 const nextConfig = {
   async redirects() {
     return [
+      { source: "/solutions/compositera", destination: "/solutions/composita", statusCode: 301 },
+      { source: "/contact", has: [{ type: "query", key: "type", value: "compositera" }], destination: "/contact?type=composita", statusCode: 301 },
       { source: "/product", destination: "/solutions", statusCode: 301 },
       { source: "/index.html", destination: "/", statusCode: 301 },
     ];

@@ -12,7 +12,7 @@ export function FeatureCard({ title, children }: { title: string; children: Reac
 
 export function SolutionCard({ solution }: { solution: typeof solutions[number] }) {
   return <Link className="solution-card" href={`/solutions/${solution.id}`}>
-    <div className={`solution-art ${solution.id}`} aria-hidden="true"><span>{solution.id === "compositera" ? "01 / MATERIALS" : "02 / ENERGY"}</span></div>
+    <div className={`solution-art ${solution.id}`} aria-hidden="true"><span>{solution.id === "composita" ? "01 / MATERIALS" : "02 / ENERGY"}</span></div>
     <div className="solution-body"><p className="eyebrow">{solution.english}</p><h3>{solution.name}</h3><p className="font-semibold">{solution.title}</p><p className="text-slate-600">{solution.description}</p><div className="tag-list">{solution.tags.map(tag => <span key={tag}>{tag}</span>)}</div><span className="text-link">探索 {solution.name} ↗</span></div></Link>;
 }
 

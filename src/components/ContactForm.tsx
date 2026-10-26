@@ -6,7 +6,7 @@ function Field({ name, label, required = false, multiline = false, type = "text"
   return <div><label htmlFor={name}>{label}{required?" *":""}</label>{multiline?<textarea id={name} name={name} rows={4} required={required} maxLength={5000}/>:<input id={name} name={name} type={type} required={required} maxLength={type==="email"?254:200} autoComplete={autoComplete}/>}</div>;
 }
 
-export function ContactForm({ initialType = "compositera" }: { initialType?: InquiryType }) {
+export function ContactForm({ initialType = "composita" }: { initialType?: InquiryType }) {
   const [inquiryType,setInquiryType]=useState<InquiryType>(initialType);
   const [busy,setBusy]=useState(false);
   const [status,setStatus]=useState<{success:boolean;text:string}|null>(null);
@@ -34,8 +34,8 @@ export function ContactForm({ initialType = "compositera" }: { initialType?: Inq
     <div className="grid sm:grid-cols-2 gap-6"><Field name="name" label="姓名" required autoComplete="name"/><Field name="company" label="公司 / 組織" autoComplete="organization"/></div>
     <Field name="email" label="Email" type="email" required autoComplete="email"/>
     <div className="form-details" key={inquiryType}>
-      <Field name="projectDescription" label={inquiryType==="compositera"?"Project Description / 專案描述":"詢問內容 / Project Description"} required multiline/>
-      {inquiryType==="compositera" && (
+      <Field name="projectDescription" label={inquiryType==="composita"?"Project Description / 專案描述":"詢問內容 / Project Description"} required multiline/>
+      {inquiryType==="composita" && (
         <>
           <Field name="componentType" label="Component Type / 零件類型" required/>
           <fieldset><legend>Required Services / 需求服務 *</legend>{services.map(service=><label className="checkbox-label" key={service}><input type="checkbox" name="services" value={service}/>{service}</label>)}</fieldset>

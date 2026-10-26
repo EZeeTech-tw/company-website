@@ -19,7 +19,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 min-w-0">
             <div className="lg:col-span-2 feature-card">
               <AnimateOnScroll animation="fade-up">
-                <ContactForm initialType={isInquiryType(type)?type:"compositera"} />
+                <ContactForm initialType={isInquiryType(type)?type:"composita"} />
               </AnimateOnScroll>
             </div>
 
