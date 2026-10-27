@@ -1,6 +1,7 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
+import { initOpenNextCloudflareForDev } from '@opennextjs/cloudflare';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname);
@@ -71,3 +72,6 @@ const nextConfig = {
 };
 
 export default nextConfig;
+
+// 讓 `next dev` 也能存取 Cloudflare bindings
+initOpenNextCloudflareForDev();

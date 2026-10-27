@@ -1,0 +1,21 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "company-website",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-10-23",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "services": [
+    {
+      // 讓 OpenNext 可以呼叫自身 Worker（快取重新驗證用）
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "company-website"
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}
