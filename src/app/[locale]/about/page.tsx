@@ -1,13 +1,15 @@
-import { useText } from "@/i18n/useText";
+import { setRequestLocale } from "next-intl/server";
+import { getText } from "@/i18n/server";
 import { Link } from "@/i18n/navigation";
 import { LogoMarquee } from "@/components/LogoMarquee";
 import { Container } from "@/components/Container";
 import { PageHero } from "@/components/PageHero";
 import { SectionHeader, FeatureCard, SolutionsGrid, CTASection } from "@/components/SiteSections";
 import { pageMetadata } from "@/lib/metadata";
-export async function generateMetadata() { return pageMetadata("關於宜智科技", "宜智科技創立於 2025 年，從校園工程研究與 SSERS 能量回收技術出發，發展 Composita 複合材料工程，以兩大產品線推進先進工程應用。", "/about"); }
-export default function AboutPage() {
- const t = useText(); return <>
+export async function generateMetadata({params}: {params: Promise<{locale:string}>}) { setRequestLocale((await params).locale); return pageMetadata("關於宜智科技", "宜智科技創立於 2025 年，從校園工程研究與 SSERS 能量回收技術出發，發展 Composita 複合材料工程，以兩大產品線推進先進工程應用。", "/about"); }
+export default async function AboutPage({params}: {params: Promise<{locale:string}>}) {
+ setRequestLocale((await params).locale);
+ const t = await getText(); return <>
  <PageHero eyebrow="WHO WE ARE" title="Built by Engineers. Driven by Curiosity." description={t("EZeeTech｜宜智科技股份有限公司 — Advanced Engineering Technology Company")} breadcrumb={[{label:t("關於我們")}]}/>
  <section><Container className="section-space grid md:grid-cols-2 gap-12"><SectionHeader eyebrow="OUR STORY" title={t("始於工程研究，持續走向產業應用。")}/><div className="space-y-5 text-slate-600"><p>{t("宜智科技於 2025 年創立，起源於校園實驗室的工程研究與技術開發。我們從振動能量回收問題出發，將 SSERS 作為早期核心技術，持續探索機構、電磁轉換與電力管理的整合。")}</p><p>{t("從研究到原型的過程，讓團隊累積設計、模擬、測試與系統整合能力。隨著工程能力與產業需求拓展，我們進一步發展 Composita，將這些能力延伸至先進複合材料、輕量化結構與數位化研發。")}</p><p>{t("今天，我們以 Composita 與 SSERS 兩條平行產品線，回應不同的工程技術需求。創業的起點仍是我們的根基，而讓技術在真實環境中創造價值，是持續前進的方向。")}</p></div></Container></section>
  <section className="bg-white border-y"><Container className="section-space"><SectionHeader eyebrow="WHO WE ARE" title="Engineering Ideas. Delivering Impact." description={t("工程驅動創新，技術創造價值。我們結合跨領域工程設計、數位模擬與實際場域驗證，將創新構想轉化為具有應用價值的技術與產品。")}/><SectionHeader eyebrow="OUR ENGINEERING PHILOSOPHY" title={t("以問題為起點，以驗證為依據。")}/><div className="grid md:grid-cols-3 gap-6">{[[t("理解需求"),t("先釐清使用情境、功能限制與驗收條件，再選擇合適的工程路徑。")],[t("整合專業"),t("串聯材料、機構、電機與電子工程，讓設計能銜接製造與系統整合。")],[t("持續驗證"),t("尊重測試條件與數據邊界，透過原型、量測與迭代持續改良。")]].map(([title,description])=><FeatureCard key={title} title={title}><p>{description}</p></FeatureCard>)}</div></Container></section>

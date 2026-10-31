@@ -1,4 +1,5 @@
-import { useText } from "@/i18n/useText";
+import { setRequestLocale } from "next-intl/server";
+import { getText } from "@/i18n/server";
 import { Link } from "@/i18n/navigation";
 import { ApplicationPhoto } from "@/components/ApplicationPhoto";
 import { CompositeOSPreview } from "@/components/CompositeOSPreview";
@@ -8,10 +9,11 @@ import { PageHero } from "@/components/PageHero";
 import { SectionHeader, CTASection } from "@/components/SiteSections";
 import { pageMetadata } from "@/lib/metadata";
 
-export async function generateMetadata() { return pageMetadata("Composita｜複合材料設計、FEA 分析與快速打樣", "Composita 提供複合材料結構設計、有限元素分析 FEA、可製造性設計 DFM 及快速打樣對接服務，協助無人機、機器人及硬體新創進行輕量化零件開發，並持續開發 Composita OS 數位化研發平台。", "/solutions/composita"); }
+export async function generateMetadata({params}: {params: Promise<{locale:string}>}) { setRequestLocale((await params).locale); return pageMetadata("Composita｜複合材料設計、FEA 分析與快速打樣", "Composita 提供複合材料結構設計、有限元素分析 FEA、可製造性設計 DFM 及快速打樣對接服務，協助無人機、機器人及硬體新創進行輕量化零件開發，並持續開發 Composita OS 數位化研發平台。", "/solutions/composita"); }
 
-export default function ProductPage() {
- const t = useText();
+export default async function ProductPage({params}: {params: Promise<{locale:string}>}) {
+ setRequestLocale((await params).locale);
+ const t = await getText();
   return (
     <>
       <PageHero variant="hero-carbon" eyebrow="ADVANCED COMPOSITE ENGINEERING" title="Composita — From Concept to Composite." description={t("Composita 是 EZeeTech 旗下的先進複合材料工程產品線，結合結構設計、FEA、DFM 與快速打樣資源，協助無人機、機器人及硬體研發團隊開發可分析、可製造、可驗證的輕量化零件。")} breadcrumb={[{label:t("產品與解決方案"),href:"/solutions"},{label:"Composita"}]}>

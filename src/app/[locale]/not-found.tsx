@@ -1,3 +1,4 @@
+"use client";
 import { useText } from "@/i18n/useText";
 import { Link } from "@/i18n/navigation";
 import { PageHero } from "@/components/PageHero";

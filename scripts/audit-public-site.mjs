@@ -14,6 +14,7 @@ for(const prefix of ['','/en'])for(const route of routes){
   assert.ok(!html.includes('NEXT_HTTP_ERROR_FALLBACK;404'),url);
   assert.ok(html.includes(`lang="${prefix?'en':'zh-Hant-TW'}"`),url);
   const content=html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/g,'');
+  if(route==='/news')for(const file of slugs){const {data}=matter(fs.readFileSync('content/news/'+file,'utf8'));if(!data.hidden)assert.ok(content.includes('/news/'+file.replace(/\.mdx$/,'')),`Missing public news card: ${url}/${file}`);}
   for(const [,href] of content.matchAll(/<a\b[^>]*href="([^"]+)"/g))if(href.startsWith('/')&&!href.startsWith('//'))links.add(href.replaceAll('&amp;','&').split('#')[0]);
   for(const [,src] of content.matchAll(/<img\b[^>]*src="([^"]+)"/g))if(src.startsWith('/'))assets.add(src.replaceAll('&amp;','&'));
   if(prefix && route.startsWith('/news/'))assert.ok(content.includes('The original article below is in Traditional Chinese.'),url);

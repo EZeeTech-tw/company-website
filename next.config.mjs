@@ -2,6 +2,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
 import createNextIntlPlugin from 'next-intl/plugin';
+import { initOpenNextCloudflareForDev } from '@opennextjs/cloudflare';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname);
@@ -23,6 +24,7 @@ const envLocal = loadEnvLocal();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {globalNotFound: true},
   async rewrites() {
     return {beforeFiles: [], afterFiles: [
       {source: '/', destination: '/zh'},
@@ -85,3 +87,6 @@ const nextConfig = {
 };
 
 export default createNextIntlPlugin()(nextConfig);
+
+// 讓 `next dev` 也能存取 Cloudflare bindings
+initOpenNextCloudflareForDev();

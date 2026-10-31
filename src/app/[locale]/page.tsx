@@ -1,4 +1,5 @@
-import { useText } from "@/i18n/useText";
+import { setRequestLocale } from "next-intl/server";
+import { getText } from "@/i18n/server";
 import { Link } from "@/i18n/navigation";
 import { ApplicationPhoto } from "@/components/ApplicationPhoto";
 import { LogoMarquee } from "@/components/LogoMarquee";
@@ -10,9 +11,10 @@ import { NewsCard } from "@/components/NewsCard";
 import { getNewsList } from "@/lib/news";
 import { pageMetadata } from "@/lib/metadata";
 import { defaultDescription, solutions } from "@/lib/site";
-export async function generateMetadata() { return pageMetadata("先進工程技術與創新研發", defaultDescription, "/"); }
-export default function HomePage() {
- const t = useText();
+export async function generateMetadata({params}: {params: Promise<{locale:string}>}) { setRequestLocale((await params).locale); return pageMetadata("先進工程技術與創新研發", defaultDescription, "/"); }
+export default async function HomePage({params}: {params: Promise<{locale:string}>}) {
+ setRequestLocale((await params).locale);
+ const t = await getText();
  const news = getNewsList().slice(0,3);
  return <>
  <PageHero variant="hero-carbon home-hero" eyebrow="ADVANCED ENGINEERING TECHNOLOGIES" title="Engineering Ideas. Delivering Impact." description={<><p className="hero-subtitle">{t("工程驅動創新，技術創造價值。")}</p><p>{t("EZeeTech｜宜智科技股份有限公司是一家先進工程技術公司。從複合材料結構到機電能源系統，我們整合工程設計、數位模擬與實際驗證，讓創新構想走向產業應用。")}</p></>}>

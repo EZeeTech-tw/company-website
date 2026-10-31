@@ -1,3 +1,4 @@
+import { setRequestLocale } from "next-intl/server";
 import { getText } from "@/i18n/server";
 import { notFound } from "next/navigation";
 import { Link } from "@/i18n/navigation";
@@ -17,7 +18,7 @@ const mdxComponents = {
 };
 
 interface NewsSlugPageProps {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale: string }>;
 }
 
 export async function generateStaticParams() {
@@ -26,6 +27,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: NewsSlugPageProps) {
+ setRequestLocale((await params).locale);
   const { slug } = await params;
   const post = getNewsBySlug(slug);
   if (!post) return { title: "找不到新聞", robots: { index: false } };
@@ -36,6 +38,7 @@ export async function generateMetadata({ params }: NewsSlugPageProps) {
 }
 
 export default async function NewsSlugPage({ params }: NewsSlugPageProps) {
+ setRequestLocale((await params).locale);
  const t = await getText();
   const { slug } = await params;
   const post = getNewsBySlug(slug);
@@ -85,3 +88,5 @@ export default async function NewsSlugPage({ params }: NewsSlugPageProps) {
     </>
   );
 }
+
+export const dynamic = 'error';

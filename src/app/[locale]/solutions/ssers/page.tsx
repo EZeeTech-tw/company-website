@@ -1,4 +1,5 @@
-import { useText } from "@/i18n/useText";
+import { setRequestLocale } from "next-intl/server";
+import { getText } from "@/i18n/server";
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/Container";
 import { AnimateOnScroll } from "@/components/AnimateOnScroll";
@@ -6,10 +7,11 @@ import { PageHero } from "@/components/PageHero";
 import { SectionHeader, CTASection } from "@/components/SiteSections";
 import { pageMetadata } from "@/lib/metadata";
 
-export async function generateMetadata() { return pageMetadata("SSERS｜懸吊式振動能量回收系統", "SSERS 是宜智科技自主研發的懸吊式振動能量回收系統，透過電磁能量轉換與電力管理技術，探索車輛懸吊運動的能源利用方式，提供技術交流、車輛適配評估與 PoC 場域驗證合作。", "/solutions/ssers"); }
+export async function generateMetadata({params}: {params: Promise<{locale:string}>}) { setRequestLocale((await params).locale); return pageMetadata("SSERS｜懸吊式振動能量回收系統", "SSERS 是宜智科技自主研發的懸吊式振動能量回收系統，透過電磁能量轉換與電力管理技術，探索車輛懸吊運動的能源利用方式，提供技術交流、車輛適配評估與 PoC 場域驗證合作。", "/solutions/ssers"); }
 
-export default function SSERSPage() {
- const t = useText();
+export default async function SSERSPage({params}: {params: Promise<{locale:string}>}) {
+ setRequestLocale((await params).locale);
+ const t = await getText();
   return (
     <>
       <PageHero variant="energy-hero" eyebrow="SUSPENSION ENERGY RECOVERY SYSTEM" title="SSERS — From Motion to Electricity." description={t("SSERS 是 EZeeTech 自主研發的懸吊式振動能量回收系統，透過電磁能量轉換、電力電子與系統整合，探索車輛懸吊相對運動中部分機械能的利用方式。")} breadcrumb={[{label:t("產品與解決方案"),href:"/solutions"},{label:"SSERS"}]}>

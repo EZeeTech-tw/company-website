@@ -1,3 +1,4 @@
+import { setRequestLocale } from "next-intl/server";
 import { getText } from "@/i18n/server";
 import { getLocale } from 'next-intl/server';
 import { Container } from "@/components/Container";
@@ -7,9 +8,10 @@ import { PageHero } from "@/components/PageHero";
 import { pageMetadata } from "@/lib/metadata";
 import { isInquiryType } from "@/lib/inquiry";
 
-export async function generateMetadata() { return pageMetadata("聯絡我們｜工程需求與合作詢問", "無論您正在開發複合材料零件、尋找專業工程研發資源，或希望探索懸吊能量回收技術的合作可能，歡迎與宜智科技聯繫。", "/contact"); }
+export async function generateMetadata({params}: {params: Promise<{locale:string}>}) { setRequestLocale((await params).locale); return pageMetadata("聯絡我們｜工程需求與合作詢問", "無論您正在開發複合材料零件、尋找專業工程研發資源，或希望探索懸吊能量回收技術的合作可能，歡迎與宜智科技聯繫。", "/contact"); }
 
-export default async function ContactPage({ searchParams }: { searchParams: Promise<{type?:string}> }) {
+export default async function ContactPage({ searchParams, params }: { searchParams: Promise<{type?:string}>; params: Promise<{locale:string}> }) {
+ setRequestLocale((await params).locale);
  const t = await getText();
  const locale = await getLocale();
  const {type}=await searchParams;
