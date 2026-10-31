@@ -5,10 +5,22 @@
 .insight-card { transition:border-color .2s ease,box-shadow .2s ease; }
 .insight-card:hover { border-color:#2563eb; box-shadow:0 8px 24px rgb(15 23 42 / .08); }
 .insight-layout { display:grid; grid-template-columns:minmax(0,240px) minmax(0,800px); gap:4rem; justify-content:center; }
-.insight-toc { position:sticky; top:110px; }
-.insight-toc ol { display:grid; gap:1rem; margin-top:1.5rem; font-size:.9rem; color:#475569; }
-.insight-toc a:hover { color:#2563eb; }
+.insight-toc { position:sticky; top:110px; padding:1.5rem; background:#eff6ff; border:1px solid #dbeafe; border-radius:.75rem; }
+.insight-toc-title { font-size:1.125rem; font-weight:700; line-height:1.4; color:#0f172a; letter-spacing:0; }
+.insight-toc ol { display:grid; gap:.5rem; margin-top:1rem; font-size:.9rem; color:#334155; counter-reset:toc; }
+.insight-toc li { counter-increment:toc; }
+.insight-toc a { display:flex; align-items:baseline; gap:.65rem; padding:.5rem 0; line-height:1.6; text-decoration:underline; text-decoration-color:#93c5fd; text-underline-offset:4px; }
+.insight-toc a::before { content:counter(toc,decimal-leading-zero); color:#2563eb; font-size:.75rem; font-weight:650; text-decoration:none; }
+.insight-toc a:hover,.insight-toc a:focus-visible { color:#1d4ed8; text-decoration-color:currentColor; }
+.insight-author { display:flex; align-items:center; gap:.75rem; padding-bottom:1.25rem; margin-bottom:2rem; border-bottom:1px solid #e2e8f0; }
+.insight-author-label { color:#64748b; font-size:.8125rem; }
+.insight-author-name { color:#0f172a; font-size:.9375rem; font-weight:650; }
+.insight-figure { margin:0 0 2.5rem; }
+.insight-figure img { display:block; width:100%; height:auto; border-radius:.75rem; }
+.insight-figure figcaption { margin-top:.75rem; color:#64748b; font-size:.8125rem; line-height:1.6; }
+.insight-thumbnail { width:100%; height:auto; border-radius:.5rem; margin-bottom:1.5rem; }
 .insight-body { min-width:0; overflow-wrap:anywhere; }
+.insight-body > .feature-card { height:auto; }
 .insight-body section { scroll-margin-top:110px; margin-bottom:3rem; }
 .insight-body h2 { font-size:clamp(1.35rem,2.5vw,1.8rem); font-weight:650; line-height:1.45; margin-bottom:1.25rem; }
 .insight-body p { line-height:1.95; color:#475569; margin-bottom:1.2rem; }
