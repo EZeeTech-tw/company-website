@@ -7,7 +7,7 @@ assert.equal(insights.length,8);
 assert.equal(new Set(insights.map(a=>a.slug)).size,8);
 assert.equal(new Set(insights.map(a=>a.date)).size,1,'All articles publish together');
 const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Taipei'}).format(new Date());
-for(const a of insights){assert.ok(a.date<=today,'No future publication dates');for(const slug of a.related)assert.ok(insights.some(b=>b.slug===slug));for(const locale of ['zh','en']){assert.ok(a[locale].sections.length>=4);assert.ok(a[locale].sections.every(s=>s.paragraphs.length));}}
+for(const a of insights){assert.ok(a.date<=today,'No future publication dates');for(const slug of a.related)assert.ok(insights.some(b=>b.slug===slug));for(const locale of ['zh','en']){assert.ok(a[locale].sections.length>=4);assert.ok(a[locale].sections.every(s=>s.paragraphs.length));}for(const reference of a.references)assert.ok(['ocw.mit.edu','ntrs.nasa.gov','standards.nasa.gov'].includes(new URL(reference.url).hostname),'Prefer academic and research references');}
 const base=process.env.TEST_BASE_URL;
 if(base){
  for(const prefix of ['','/en']){
@@ -21,6 +21,11 @@ if(base){
    const copy=a[prefix?'en':'zh'];assert.ok(html.includes(copy.title));
    const schemas=[...html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/g)].map(m=>JSON.parse(m[1]));
    const post=schemas.flatMap(s=>s['@graph']??[s]).find(s=>s['@type']==='BlogPosting');assert.equal(post.headline,copy.title);assert.equal(post.datePublished,a.date);
+   const imagePath=`/insights/${a.slug}.png`;
+   assert.equal(new URL(post.image).pathname,imagePath);
+   assert.ok(html.includes(`property="og:image" content="https://www.ezeetech.tw${imagePath}"`));
+   const social=await fetch(base+imagePath);assert.equal(social.status,200);assert.ok(social.headers.get('content-type')?.includes('image/png'));
+   const visible=html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/g,'');assert.ok(!/Ansys|PyDPF|<time\b|<figcaption\b/i.test(visible),'Keep articles independent and hide publication labels');
    for(let i=1;i<=copy.sections.length;i++)assert.ok(html.includes(`id="section-${i}"`));
    const sitemap=await(await fetch(base+'/sitemap.xml')).text();assert.ok(sitemap.includes(route));
   }

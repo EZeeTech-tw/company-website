@@ -11,10 +11,13 @@ import { NewsCard } from "@/components/NewsCard";
 import { getNewsList } from "@/lib/news";
 import { pageMetadata } from "@/lib/metadata";
 import { defaultDescription, solutions } from "@/lib/site";
+import Image from 'next/image';
+import { insights, insightCopy } from '@/lib/insights';
 export async function generateMetadata({params}: {params: Promise<{locale:string}>}) { setRequestLocale((await params).locale); return pageMetadata("先進工程技術與創新研發", defaultDescription, "/"); }
 export default async function HomePage({params}: {params: Promise<{locale:string}>}) {
  setRequestLocale((await params).locale);
  const t = await getText();
+ const locale = (await params).locale;
  const news = getNewsList().slice(0,3);
  return <>
  <PageHero variant="hero-carbon home-hero" eyebrow="ADVANCED ENGINEERING TECHNOLOGIES" title="Engineering Ideas. Delivering Impact." description={<><p className="hero-subtitle">{t("工程驅動創新，技術創造價值。")}</p><p>{t("EZeeTech｜宜智科技股份有限公司是一家先進工程技術公司。從複合材料結構到機電能源系統，我們整合工程設計、數位模擬與實際驗證，讓創新構想走向產業應用。")}</p></>}>
@@ -32,6 +35,7 @@ export default async function HomePage({params}: {params: Promise<{locale:string
  ] as const).map(([title,description,kind])=><div key={title} className="feature-card application-card"><ApplicationPhoto kind={kind}/><h3>{title}</h3><p className="text-slate-600">{description}</p></div>)}</div></Container></section>
  <section className="bg-white border-y"><Container className="section-space grid md:grid-cols-2 gap-12"><SectionHeader eyebrow="ABOUT EZEETECH" title="Built by Engineers. Driven by Curiosity."/><div className="space-y-5 text-slate-600"><p>{t("宜智科技創立於 2025 年，起源於校園工程研究與技術開發，以 SSERS 振動能量回收研究為早期核心。")}</p><p>{t("隨著工程能力與產業需求拓展，我們發展 Composita，將研發能力延伸至先進複合材料、結構設計與研發數位化。")}</p><Link href="/about" className="text-link inline-block">{t("認識我們的故事 ↗")}</Link></div></Container></section>
  <section><Container className="section-space"><SectionHeader eyebrow="LATEST NEWS" title="Our Journey in Engineering." description={t("技術研究、企業進展與合作紀錄。")}/><div className="grid md:grid-cols-3 gap-6">{news.map(item=><NewsCard key={item.slug} item={item}/>)}</div>{!news.length && <p className="empty-state">{t("目前尚無消息。")}</p>}<Link href="/news" className="btn btn-secondary mt-8">{t("查看全部消息 ↗")}</Link></Container></section>
+ <section className="bg-white border-y"><Container className="section-space"><SectionHeader eyebrow="ENGINEERING INSIGHTS" title={locale==='en'?'Better questions. Better engineering.':'從工程問題，找到設計方向。'} description={locale==='en'?'Practical guides to material selection, analysis and project planning.':'從選材、分析到專案準備，找到下一個設計決策的依據。'}/><div className="grid md:grid-cols-3 gap-6">{insights.slice(0,3).map(article=>{const copy=insightCopy(article,locale);return <Link href={`/insights/${article.slug}`} key={article.slug} className="feature-card insight-card"><Image className="insight-thumbnail" src={`/insights/${article.slug}.svg`} alt="" width={1200} height={640} unoptimized/><p className="eyebrow">{article.category}</p><h3 className="mt-4 text-lg leading-relaxed font-semibold">{copy.title}</h3><span className="text-link mt-5 inline-block">{locale==='en'?'Read guide ↗':'閱讀指南 ↗'}</span></Link>;})}</div><Link href="/insights" className="btn btn-secondary mt-8">{locale==='en'?'Explore engineering insights ↗':'探索工程知識 ↗'}</Link></Container></section>
  <CTASection/>
  </>;
 }

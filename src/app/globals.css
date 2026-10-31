@@ -17,7 +17,9 @@
 .insight-author-name { color:#0f172a; font-size:.9375rem; font-weight:650; }
 .insight-figure { margin:0 0 2.5rem; }
 .insight-figure img { display:block; width:100%; height:auto; border-radius:.75rem; }
-.insight-figure figcaption { margin-top:.75rem; color:#64748b; font-size:.8125rem; line-height:1.6; }
+.insight-figure a { display:block; position:relative; border-radius:.75rem; cursor:zoom-in; }
+.insight-figure a:focus-visible { outline:3px solid #2563eb; outline-offset:4px; }
+.insight-image-expand { position:absolute; right:12px; bottom:12px; display:grid; place-items:center; width:36px; height:36px; border-radius:50%; background:#fff; border:1px solid #dbeafe; color:#2563eb; box-shadow:0 2px 8px #172b4d12; }
 .insight-thumbnail { width:100%; height:auto; border-radius:.5rem; margin-bottom:1.5rem; }
 .insight-body { min-width:0; overflow-wrap:anywhere; }
 .insight-body > .feature-card { height:auto; }
