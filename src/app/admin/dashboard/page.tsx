@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { onAdminAuthStateChanged, signOutAdmin, AdminUser } from '@/lib/auth-firebase'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function AdminDashboard() {
   const [user, setUser] = useState<AdminUser | null>(null)
@@ -106,9 +107,9 @@ export default function AdminDashboard() {
               </div>
               <div className="bg-gray-50 px-6 py-3">
                 <div className="text-sm">
-                  <a href="/admin/content" className="font-medium text-indigo-600 hover:text-indigo-500">
+                  <Link href="/admin/content" className="font-medium text-indigo-600 hover:text-indigo-500">
                     進入管理 <span>&rarr;</span>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -133,9 +134,9 @@ export default function AdminDashboard() {
               </div>
               <div className="bg-gray-50 px-6 py-3">
                 <div className="text-sm">
-                  <a href="/admin/images" className="font-medium text-green-600 hover:text-green-500">
+                  <Link href="/admin/images" className="font-medium text-green-600 hover:text-green-500">
                     進入管理 <span>&rarr;</span>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -161,9 +162,9 @@ export default function AdminDashboard() {
               </div>
               <div className="bg-gray-50 px-6 py-3">
                 <div className="text-sm">
-                  <a href="/admin/settings" className="font-medium text-yellow-600 hover:text-yellow-500">
+                  <Link href="/admin/settings" className="font-medium text-yellow-600 hover:text-yellow-500">
                     進入設置 <span>&rarr;</span>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

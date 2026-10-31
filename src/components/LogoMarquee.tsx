@@ -1,3 +1,4 @@
+import { useText } from "@/i18n/useText";
 import Image from "next/image";
 
 const logos = [
@@ -11,13 +12,12 @@ const logos = [
 ];
 
 export function LogoMarquee() {
+ const t = useText();
   return (
     <section className="w-full bg-slate-950 overflow-hidden" aria-labelledby="partners-heading">
       <div className="py-8 md:py-12">
-        <h2 id="partners-heading" className="text-center text-white text-xl md:text-2xl font-bold mb-8">
-          合作夥伴與戰略聯盟
-        </h2>
-        <div className="logo-track flex items-center whitespace-nowrap" aria-label="合作夥伴列表">
+        <h2 id="partners-heading" className="text-center text-white text-xl md:text-2xl font-bold mb-8">{t("合作夥伴與戰略聯盟")}</h2>
+        <div className="logo-track flex items-center whitespace-nowrap" aria-label={t("合作夥伴列表")}>
           {[...logos, ...logos].map((logo, index) => (
             <div
               key={`${logo.src}-${index}`}
@@ -27,7 +27,7 @@ export function LogoMarquee() {
             >
               <Image
                 src={logo.src}
-                alt={index < logos.length ? logo.alt : ""}
+                alt={index < logos.length ? t(logo.alt) : ""}
                 width={logo.width}
                 height={logo.height}
                 sizes={`${logo.width}px`}

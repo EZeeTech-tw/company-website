@@ -4,6 +4,9 @@ import "./globals.css";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { brandName, defaultDescription, siteUrl } from "@/lib/site";
+import { NextIntlClientProvider } from 'next-intl';
+import { getLocale } from 'next-intl/server';
+import { translator } from '@/i18n/text';
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 
@@ -40,29 +43,33 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+  const t = translator(locale);
   return (
-    <html lang="zh-Hant-TW">
+    <html lang={locale === 'en' ? 'en' : 'zh-Hant-TW'}>
       <body className={`${inter.variable} ${notoSansTC.variable} min-h-screen flex flex-col w-full min-w-0`}>
+        <NextIntlClientProvider locale={locale} messages={{}}>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org", "@type": "Organization",
-          name: brandName, url: siteUrl, description: defaultDescription,
+          name: t(brandName), url: siteUrl, description: t(defaultDescription),
           logo: `${siteUrl}/news/EZeeTech.png`, email: "info@ezeetech.tw",
           foundingDate: "2025",
           brand: [{ "@type": "Brand", name: "Composita" }, { "@type": "Brand", name: "SSERS" }],
         }).replace(/</g, "\\u003c") }} />
         <a href="#main-content" className="skip-link">
-          跳至主要內容
+          {locale === 'en' ? 'Skip to main content' : '跳至主要內容'}
         </a>
         <SiteHeader />
         <main id="main-content" className="flex-1 w-full min-w-0" tabIndex={-1}>
           {children}
         </main>
         <SiteFooter />
+        </NextIntlClientProvider>
       </body>
     </html>
   );

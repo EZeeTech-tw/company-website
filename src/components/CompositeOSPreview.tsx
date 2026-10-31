@@ -1,4 +1,6 @@
 "use client";
+import { useText } from "@/i18n/useText";
+
 
 import { type CSSProperties, useEffect, useRef, useState } from "react";
 
@@ -27,6 +29,7 @@ const parameters = [
 ];
 
 export function CompositeOSPreview() {
+ const t = useText();
   const [{sequence,phase},setTimeline]=useState({sequence:0,phase:0});
   const progress=phase===2?1:0;
   const root=useRef<HTMLDivElement>(null);
@@ -58,7 +61,7 @@ export function CompositeOSPreview() {
       const row=element?.querySelector<HTMLElement>(`[data-job="${sequence}"]`);
       const bar=row?.querySelector<HTMLElement>(".auto-progress>span");
       if(bar)bar.style.transform=`scaleX(${progress})`;
-      const value=Math.round(parameter.from+(parameter.to-parameter.from)*progress).toLocaleString("en-US")+parameter.unit;
+      const value=Math.round(parameter.from+(parameter.to-parameter.from)*progress).toLocaleString("en-US")+t(parameter.unit);
       if(value!==previousValue) {
         const label=row?.querySelector<HTMLElement>(".auto-parameter b");
         if(label){label.textContent=value;previousValue=value;}
@@ -78,9 +81,9 @@ export function CompositeOSPreview() {
     motion.addEventListener("change",sync);
     document.addEventListener("visibilitychange",sync);
     return ()=>{observer.disconnect();cancelAnimationFrame(frame);motion.removeEventListener("change",sync);document.removeEventListener("visibilitychange",sync);};
-  },[]);
+  },[t]);
   return <div className="agent-showcase agent-autoplay" ref={root}>
-    <div className="agent-intro"><div><p className="eyebrow">COMPOSITA OS / AGENT PLATFORM</p><h3>專注工程設計。<br/>把複材分析流程交給 <strong>Composita OS</strong></h3></div></div>
+    <div className="agent-intro"><div><p className="eyebrow">COMPOSITA OS / AGENT PLATFORM</p><h3>{t("專注工程設計。")}<br/>{t("把複材分析流程交給")}<strong>Composita OS</strong></h3></div></div>
     <div className="auto-agent-layout">
       <div className="auto-feed" aria-hidden="true">
         {[0,1,2,3,4,5].map(offset=>{
@@ -92,16 +95,16 @@ export function CompositeOSPreview() {
           const jobProgress=offset===0?progress:1;
           return <div key={job} data-job={job} className={`auto-job ${offset===0?"current":""}`} style={{"--row":offset} as CSSProperties}>
             <span className="auto-branch">⑂</span>
-            <span className="auto-job-title"><strong>{stage.id} / {stage.title}</strong><span>{stage.action}</span>
-              <span className="auto-parameter">{parameter.label} <b>{Math.round(parameter.from+(parameter.to-parameter.from)*jobProgress).toLocaleString("en-US")}{parameter.unit}</b><span className="auto-context"> · {parameter.context}</span></span>
+            <span className="auto-job-title"><strong>{stage.id} / {t(stage.title)}</strong><span>{t(stage.action)}</span>
+              <span className="auto-parameter">{t(parameter.label)} <b>{Math.round(parameter.from+(parameter.to-parameter.from)*jobProgress).toLocaleString("en-US")}{t(parameter.unit)}</b><span className="auto-context"> · {t(parameter.context)}</span></span>
             </span>
-            <span className="auto-statuses">{["接收","運算","完成"].map((label,step)=><span key={label} className={`auto-job-status ${step===jobPhase?"is-active":""} ${step>jobPhase?"is-pending":""}`}>{step===1 && jobPhase===1?<i/>:<span>{step===2?"✓":step===0?"↑":"↻"}</span>}{label}</span>)}</span>
+            <span className="auto-statuses">{[t("接收"),t("運算"),t("完成")].map((label,step)=><span key={label} className={`auto-job-status ${step===jobPhase?"is-active":""} ${step>jobPhase?"is-pending":""}`}>{step===1 && jobPhase===1?<i/>:<span>{step===2?"✓":step===0?"↑":"↻"}</span>}{label}</span>)}</span>
             <span className="auto-progress"><span style={{transform:`scaleX(${jobProgress})`}}/></span>
           </div>;
         })}
       </div>
     </div>
-    <p className="sr-only">規劃流程：{stages.map(stage=>stage.title).join("、")}。</p>
-    <p className="agent-positioning">以 Agent 串聯 CAD 準備、複材建模、模擬、失效評估與交付。Composita OS 是 Composita 旗下開發中的平台。</p>
+    <p className="sr-only">{t("規劃流程：")}{stages.map(stage=>t(stage.title)).join(" / ")}{t("。")}</p>
+    <p className="agent-positioning">{t("以 Agent 串聯 CAD 準備、複材建模、模擬、失效評估與交付。Composita OS 是 Composita 旗下開發中的平台。")}</p>
   </div>;
 }

@@ -1,3 +1,4 @@
+import { useText } from "@/i18n/useText";
 import Image from "next/image";
 
 const photos = {
@@ -9,6 +10,7 @@ const photos = {
 };
 
 export function ApplicationPhoto({ kind }: { kind: keyof typeof photos }) {
+ const t = useText();
   const photo = photos[kind];
-  return <div className="application-photo"><Image src={`/images/applications/${kind}.jpg`} alt={photo.alt} fill sizes="(min-width: 1280px) 280px, (min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" style={{ objectFit: "cover", objectPosition: photo.position }} /></div>;
+  return <div className="application-photo"><Image src={`/images/applications/${kind}.jpg`} alt={t(photo.alt)} fill sizes="(min-width: 1280px) 280px, (min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" style={{ objectFit: "cover", objectPosition: photo.position }} /></div>;
 }

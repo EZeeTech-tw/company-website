@@ -1,12 +1,16 @@
+import { getText } from "@/i18n/server";
 import { notFound } from "next/navigation";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { Container } from "@/components/Container";
 import { PageHero } from "@/components/PageHero";
 import { TwoPhotoGrid } from "@/components/TwoPhotoGrid";
 import { AnimateOnScroll } from "@/components/AnimateOnScroll";
 import { getNewsBySlug, getNewsSlugs } from "@/lib/news";
-import { pageMetadata, siteUrl } from "@/lib/site";
+import { pageMetadata } from "@/lib/metadata";
+import { siteUrl } from "@/lib/site";
+import { getLocale } from 'next-intl/server';
+import { localizeNews } from '@/i18n/news';
 
 const mdxComponents = {
   TwoPhotoGrid,
@@ -25,29 +29,34 @@ export async function generateMetadata({ params }: NewsSlugPageProps) {
   const { slug } = await params;
   const post = getNewsBySlug(slug);
   if (!post) return { title: "找不到新聞", robots: { index: false } };
-  const metadata = pageMetadata(post.meta.title, post.meta.excerpt ?? post.meta.title, `/news/${slug}`);
+  post.meta = localizeNews(post, await getLocale());
+  const metadata = await pageMetadata(post.meta.title, post.meta.excerpt ?? post.meta.title, `/news/${slug}`);
   return { ...metadata, robots: post.meta.hidden ? { index: false, follow: true } : undefined,
     openGraph: { ...metadata.openGraph, type: "article", publishedTime: post.meta.date } };
 }
 
 export default async function NewsSlugPage({ params }: NewsSlugPageProps) {
+ const t = await getText();
   const { slug } = await params;
   const post = getNewsBySlug(slug);
   if (!post) notFound();
+  const locale = await getLocale();
+  post.meta = localizeNews(post, locale);
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
         "@context": "https://schema.org", "@type": "NewsArticle", headline: post.meta.title,
         datePublished: post.meta.date, description: post.meta.excerpt,
-        mainEntityOfPage: `${siteUrl}/news/${slug}`,
+        mainEntityOfPage: `${siteUrl}${locale === 'en' ? '/en' : ''}/news/${slug}`,
+        inLanguage: 'zh-Hant',
         author: { "@type": "Organization", name: "EZeeTech", url: siteUrl },
         publisher: { "@type": "Organization", name: "EZeeTech", url: siteUrl },
         image: post.meta.image ? new URL(post.meta.image, siteUrl).href : `${siteUrl}/opengraph-image`,
       }).replace(/</g, "\\u003c") }} />
       <PageHero
         eyebrow={post.meta.category}
-        breadcrumb={[{ label: "最新消息", href: "/news" }, { label: post.meta.title }]}
+        breadcrumb={[{ label: t("最新消息"), href: "/news" }, { label: post.meta.title }]}
         title={post.meta.title}
         description={
           post.meta.date ? (
@@ -63,10 +72,9 @@ export default async function NewsSlugPage({ params }: NewsSlugPageProps) {
           <Link
             href="/news"
             className="text-link mb-8 inline-block"
-          >
-            ← 返回最新消息
-          </Link>
-          <article className="w-full min-w-0 overflow-hidden">
+          >{t("← 返回最新消息")}</Link>
+          {locale === 'en' && <aside className="feature-card mb-8"><h2 className="font-semibold">English summary</h2><p className="mt-3">{post.meta.excerpt || post.meta.title}</p><p className="text-sm text-slate-500 mt-4">The original article below is in Traditional Chinese. Its publication date and historical content are preserved.</p></aside>}
+          <article lang="zh-Hant" className="w-full min-w-0 overflow-hidden">
             <div className="prose prose-slate prose-img:rounded-lg max-w-4xl">
               <MDXRemote source={post.content} components={mdxComponents} />
             </div>

@@ -1,6 +1,7 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
+import createNextIntlPlugin from 'next-intl/plugin';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname);
@@ -22,8 +23,21 @@ const envLocal = loadEnvLocal();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async rewrites() {
+    return {beforeFiles: [], afterFiles: [
+      {source: '/', destination: '/zh'},
+      ...['about','contact','technology','news','solutions'].map(route => ({source:`/${route}`,destination:`/zh/${route}`})),
+      {source:'/news/:slug',destination:'/zh/news/:slug'},
+      {source:'/solutions/:slug',destination:'/zh/solutions/:slug'},
+    ], fallback: []};
+  },
   async redirects() {
     return [
+      { source: '/zh', destination: '/', permanent: true },
+      { source: '/zh/:path*', destination: '/:path*', permanent: true },
+      { source: '/en/solutions/compositera', destination: '/en/solutions/composita', statusCode: 301 },
+      { source: '/en/product', destination: '/en/solutions', statusCode: 301 },
+      { source: '/en/contact', has: [{type:'query',key:'type',value:'compositera'}], destination:'/en/contact?type=composita',statusCode:301 },
       { source: "/solutions/compositera", destination: "/solutions/composita", statusCode: 301 },
       { source: "/contact", has: [{ type: "query", key: "type", value: "compositera" }], destination: "/contact?type=composita", statusCode: 301 },
       { source: "/product", destination: "/solutions", statusCode: 301 },
@@ -70,4 +84,4 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+export default createNextIntlPlugin()(nextConfig);
