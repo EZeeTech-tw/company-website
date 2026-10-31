@@ -7,7 +7,7 @@ import { usePathname } from "@/i18n/navigation";
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { useRef, useState } from "react";
 import { Container } from "./Container";
-const links = [["/", "首頁"], ["/solutions", "產品與解決方案"], ["/about", "關於我們"], ["/news", "最新消息"], ["/contact", "聯絡我們"]] as const;
+const links = [["/", "首頁"], ["/solutions", "產品與解決方案"], ["/about", "關於我們"], ["/insights", "工程知識"], ["/news", "最新消息"], ["/contact", "聯絡我們"]] as const;
 export function SiteHeader() {
  const t = useText();
  const pathname = usePathname();

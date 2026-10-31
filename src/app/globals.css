@@ -2,6 +2,20 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @custom-variant dark (&:is(.dark *));
+.insight-card { transition:border-color .2s ease,box-shadow .2s ease; }
+.insight-card:hover { border-color:#2563eb; box-shadow:0 8px 24px rgb(15 23 42 / .08); }
+.insight-layout { display:grid; grid-template-columns:minmax(0,240px) minmax(0,800px); gap:4rem; justify-content:center; }
+.insight-toc { position:sticky; top:110px; }
+.insight-toc ol { display:grid; gap:1rem; margin-top:1.5rem; font-size:.9rem; color:#475569; }
+.insight-toc a:hover { color:#2563eb; }
+.insight-body { min-width:0; overflow-wrap:anywhere; }
+.insight-body section { scroll-margin-top:110px; margin-bottom:3rem; }
+.insight-body h2 { font-size:clamp(1.35rem,2.5vw,1.8rem); font-weight:650; line-height:1.45; margin-bottom:1.25rem; }
+.insight-body p { line-height:1.95; color:#475569; margin-bottom:1.2rem; }
+.insight-body ul { list-style:disc; padding-left:1.4rem; line-height:1.9; color:#475569; }
+.insight-body li { margin-bottom:.6rem; }
+.insight-references a { color:#2563eb; text-decoration:underline; text-underline-offset:3px; }
+@media(max-width:1023px) { .insight-layout { grid-template-columns:minmax(0,1fr); gap:2.5rem; } .insight-toc { position:static; } }
 :root {
  --background:#f8fafc; --foreground:#0f172a; --card:#fff; --card-foreground:#0f172a;
  --popover:#fff; --popover-foreground:#0f172a; --primary:#2563eb; --primary-foreground:#fff;
