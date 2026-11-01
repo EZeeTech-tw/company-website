@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import matter from 'gray-matter';
 const base=process.env.TEST_BASE_URL || 'http://127.0.0.1:3008';
 const slugs=fs.readdirSync('content/news').filter(f=>f.endsWith('.mdx'));
-const routes=['','/about','/solutions','/solutions/composita','/solutions/ssers','/technology','/news','/contact',...slugs.map(f=>'/news/'+f.replace(/\.mdx$/,''))];
+const routes=['','/about','/solutions','/solutions/composita','/solutions/ssers','/technology','/news','/contact','/services',...slugs.map(f=>'/news/'+f.replace(/\.mdx$/,''))];
 const links=new Set(),assets=new Set();
 let pages=0;
 for(const prefix of ['','/en'])for(const route of routes){

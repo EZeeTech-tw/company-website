@@ -21,7 +21,7 @@ for(const file of fs.readdirSync('content/news').filter(f=>f.endsWith('.mdx')))a
 console.log(`PASS: ${checked} UI translation references and ${Object.keys(news).length} news translations.`);
 if(process.env.TEST_BASE_URL) {
   const base=process.env.TEST_BASE_URL;
-  for(const prefix of ['', '/en'])for(const route of ['', '/about','/solutions','/solutions/composita','/solutions/ssers','/technology','/news','/contact']) {
+  for(const prefix of ['', '/en'])for(const route of ['', '/about','/solutions','/solutions/composita','/solutions/ssers','/technology','/news','/contact','/services']) {
     const url=prefix+route||'/';
     const response=await fetch(base+url);
     assert.equal(response.status,200,url);
