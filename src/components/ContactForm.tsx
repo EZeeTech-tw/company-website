@@ -45,13 +45,6 @@ export function ContactForm({ initialType = "composita" }: { initialType?: Inqui
           <div><label htmlFor="developmentStage">{t("Development Stage / 開發階段 *")}</label><select id="developmentStage" name="developmentStage" required defaultValue=""><option value="" disabled>{t("請選擇開發階段")}</option>{stages.map(stage=><option key={stage} value={stage}>{t(stage)}</option>)}</select></div>
         </>
       )}
-      {inquiryType==="ssers" && (
-        <>
-          <Field name="applicationType" label={t("Vehicle / Application Type / 車輛或應用類型")} required/>
-          <Field name="partnershipObjective" label={t("Partnership Objective / 合作目標")} required multiline/>
-          <Field name="technicalRequirements" label={t("Technical Requirements / 技術需求")} required multiline/>
-        </>
-      )}
     </div>
     <Field name="additionalInfo" label={t("其他資訊")} multiline/>
     <div className="hidden" aria-hidden="true"><label htmlFor="website">Website</label><input name="website" id="website" tabIndex={-1} autoComplete="off"/></div>

@@ -16,12 +16,12 @@ export function FeatureCard({ title, children }: { title: string; children: Reac
 export function SolutionCard({ solution }: { solution: typeof solutions[number] }) {
  const t = useText();
   return <Link className="solution-card" href={`/solutions/${solution.id}`}>
-    <div className={`solution-art ${solution.id}`} aria-hidden="true"><span>{solution.id === "composita" ? "01 / MATERIALS" : "02 / ENERGY"}</span></div>
+    <div className={`solution-art ${solution.id}`} aria-hidden="true"><span>01 / MATERIALS</span></div>
     <div className="solution-body"><p className="eyebrow">{solution.english}</p><h3>{solution.name}</h3><p className="font-semibold">{t(solution.title)}</p><p className="text-slate-600">{t(solution.description)}</p><div className="tag-list">{solution.tags.map(tag => <span key={tag}>{tag}</span>)}</div><span className="text-link">{t("探索")}{solution.name} ↗</span></div></Link>;
 }
 
-export function SolutionsGrid() { 
-  return <div className="grid grid-cols-1 md:grid-cols-2 gap-6">{solutions.map(solution => <SolutionCard key={solution.id} solution={solution} />)}</div>; 
+export function SolutionsGrid() {
+  return <div className="grid grid-cols-1 gap-6 max-w-4xl mx-auto">{solutions.map(solution => <SolutionCard key={solution.id} solution={solution} />)}</div>;
 }
 
 export function CTASection({ title = "Have an Engineering Challenge?", description = "從初步技術討論到概念驗證，讓我們一起探索下一個工程解決方案。", href = "/contact", label = "與我們討論需求" }: { title?: string; description?: string; href?: string; label?: string }) {

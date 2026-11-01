@@ -4,7 +4,7 @@ import { useText } from "@/i18n/useText";
 import { useState } from "react";
 import { NewsCard } from "./NewsCard";
 import type { NewsItem } from "@/lib/news";
-const categories = ["All", "Company", "Composita", "SSERS", "Awards", "Partnerships"];
+const categories = ["All", "Company", "Composita", "Awards", "Partnerships"];
 export function NewsExplorer({ items }: { items: NewsItem[] }) {
  const t = useText();
  const [category,setCategory]=useState("All");

@@ -36,6 +36,9 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      { source: '/solutions/ssers', destination: '/solutions', statusCode: 301 },
+      { source: '/en/solutions/ssers', destination: '/en/solutions', statusCode: 301 },
+      ...['','/en'].map(prefix=>({source:`${prefix}/contact`,has:[{type:'query',key:'type',value:'ssers'}],destination:`${prefix}/contact?type=other`,statusCode:301})),
       { source: '/zh', destination: '/', permanent: true },
       { source: '/zh/:path*', destination: '/:path*', permanent: true },
       { source: '/en/solutions/compositera', destination: '/en/solutions/composita', statusCode: 301 },

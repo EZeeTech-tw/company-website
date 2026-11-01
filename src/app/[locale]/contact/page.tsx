@@ -8,7 +8,7 @@ import { PageHero } from "@/components/PageHero";
 import { pageMetadata } from "@/lib/metadata";
 import { isInquiryType } from "@/lib/inquiry";
 
-export async function generateMetadata({params}: {params: Promise<{locale:string}>}) { setRequestLocale((await params).locale); return pageMetadata("聯絡我們｜工程需求與合作詢問", "無論您正在開發複合材料零件、尋找專業工程研發資源，或希望探索懸吊能量回收技術的合作可能，歡迎與宜智科技聯繫。", "/contact"); }
+export async function generateMetadata({params}: {params: Promise<{locale:string}>}) { setRequestLocale((await params).locale); return pageMetadata("聯絡我們｜工程需求與合作詢問", "無論您正在開發複合材料零件、尋找結構分析資源，或需要可製造性評估與打樣對接，歡迎與宜智科技討論工程需求。", "/contact"); }
 
 export default async function ContactPage({ searchParams, params }: { searchParams: Promise<{type?:string}>; params: Promise<{locale:string}> }) {
  setRequestLocale((await params).locale);

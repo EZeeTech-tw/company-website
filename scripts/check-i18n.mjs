@@ -21,7 +21,7 @@ for(const file of fs.readdirSync('content/news').filter(f=>f.endsWith('.mdx')))a
 console.log(`PASS: ${checked} UI translation references and ${Object.keys(news).length} news translations.`);
 if(process.env.TEST_BASE_URL) {
   const base=process.env.TEST_BASE_URL;
-  for(const prefix of ['', '/en'])for(const route of ['', '/about','/solutions','/solutions/composita','/solutions/ssers','/technology','/news','/contact','/services']) {
+  for(const prefix of ['', '/en'])for(const route of ['', '/about','/solutions','/solutions/composita','/technology','/news','/contact','/services']) {
     const url=prefix+route||'/';
     const response=await fetch(base+url);
     assert.equal(response.status,200,url);
@@ -40,7 +40,7 @@ if(process.env.TEST_BASE_URL) {
     assert.ok(response.status===404 || (response.status===200 && /<meta name="robots" content="noindex"/.test(html)),url);
     assert.ok(html.includes(url.startsWith('/en')?'Page not found.':'找不到這個頁面。'),url);
   }
-  for(const [from,to] of [['/solutions/compositera','/solutions/composita'],['/en/solutions/compositera','/en/solutions/composita'],['/zh/about','/about']]){
+  for(const [from,to] of [['/solutions/compositera','/solutions/composita'],['/en/solutions/compositera','/en/solutions/composita'],['/solutions/ssers','/solutions'],['/en/solutions/ssers','/en/solutions'],['/zh/about','/about']]){
     const response=await fetch(base+from,{redirect:'manual'});
     assert.ok(response.status>=300&&response.status<400,from);
     assert.equal(new URL(response.headers.get('location'),base).pathname,to);

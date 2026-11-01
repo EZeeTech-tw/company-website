@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     siteName: "宜智科技 EZeeTech",
     title: "宜智科技 EZeeTech｜先進工程技術與創新研發",
     description:
-      "整合複合材料工程、數位模擬、快速打樣與振動能量回收技術，讓創新構想更快走向真實應用。",
+      "整合複合材料結構設計、數位模擬、可製造性評估與快速打樣，讓創新構想更快走向真實應用。",
   },
 };
 
@@ -67,7 +67,7 @@ export default async function RootLayout({
           name: t(brandName), url: siteUrl, description: t(defaultDescription),
           logo: `${siteUrl}/news/EZeeTech.png`, email: "info@ezeetech.tw",
           foundingDate: "2025",
-          brand: [{ "@type": "Brand", name: "Composita" }, { "@type": "Brand", name: "SSERS" }],
+          brand: [{ "@type": "Brand", name: "Composita" }],
         }).replace(/</g, "\\u003c") }} />
         <a href="#main-content" className="skip-link">
           {locale === 'en' ? 'Skip to main content' : '跳至主要內容'}
