@@ -28,7 +28,7 @@ const nextConfig = {
   async rewrites() {
     return {beforeFiles: [], afterFiles: [
       {source: '/', destination: '/zh'},
-      ...['about','contact','technology','news','solutions','insights','services'].map(route => ({source:`/${route}`,destination:`/zh/${route}`})),
+      ...['about','contact','technology','news','solutions','insights','services','waitlist'].map(route => ({source:`/${route}`,destination:`/zh/${route}`})),
       {source:'/insights/:slug',destination:'/zh/insights/:slug'},
       {source:'/news/:slug',destination:'/zh/news/:slug'},
       {source:'/solutions/:slug',destination:'/zh/solutions/:slug'},
