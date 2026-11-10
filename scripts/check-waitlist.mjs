@@ -41,7 +41,7 @@ if (process.env.TEST_BASE_URL) {
     assert.ok(html.includes(`https://www.ezeetech.tw${prefix}/waitlist`));
     assert.ok(html.includes('name="email"') && html.includes('name="consent"'));
     assert.ok(html.includes(prefix ? 'Be first to hear.' : '搶先一步，收到消息。'));
-    const home = await (await fetch(`${base}${prefix || '/'}`)).text();
+    const home = await (await fetch(`${base}${prefix || '/'}`,{headers:{Cookie:'site-language=zh'}})).text();
     assert.ok(home.includes(`href="${prefix}/waitlist"`));
   }
   const sitemap = await (await fetch(`${base}/sitemap.xml`)).text();

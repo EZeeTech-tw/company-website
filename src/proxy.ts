@@ -1,5 +1,11 @@
 import { NextResponse, type NextRequest } from 'next/server';
 export default function proxy(request: NextRequest) {
+  // New visitors enter the English site. An explicit Chinese choice is remembered.
+  if (request.nextUrl.pathname === '/' && request.cookies.get('site-language')?.value !== 'zh') {
+    const destination = request.nextUrl.clone();
+    destination.pathname = '/en';
+    return NextResponse.redirect(destination, 307);
+  }
   const headers = new Headers(request.headers);
   const english = /^\/en(?:\/|$)/.test(request.nextUrl.pathname);
   headers.set('X-NEXT-INTL-LOCALE', english ? 'en' : 'zh');

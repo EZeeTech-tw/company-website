@@ -10,7 +10,7 @@ export async function pageMetadata(title: string, description: string, path: str
   return {
     metadataBase: new URL(siteUrl),
     title: {absolute: `${title} | ${locale === 'en' ? 'EZeeTech' : 'EZeeTech 宜智科技'}`}, description,
-    alternates: {canonical: url, languages: {'zh-Hant': path, en: `/en${path === '/' ? '' : path}`, 'x-default': path}},
+    alternates: {canonical: url, languages: {'zh-Hant': path, en: `/en${path === '/' ? '' : path}`, 'x-default': `/en${path === '/' ? '' : path}`}},
     openGraph: {title, description, url, type: 'website', siteName: t(brandName), locale: locale === 'en' ? 'en_US' : 'zh_TW', alternateLocale: locale === 'en' ? 'zh_TW' : 'en_US', images: [{url:'/opengraph-image',width:1200,height:630,alt:'EZeeTech — Advanced Engineering Technologies'}]},
     twitter: {card:'summary_large_image',title,description,images:['/opengraph-image']}
   };

@@ -21,9 +21,12 @@ for(const file of fs.readdirSync('content/news').filter(f=>f.endsWith('.mdx')))a
 console.log(`PASS: ${checked} UI translation references and ${Object.keys(news).length} news translations.`);
 if(process.env.TEST_BASE_URL) {
   const base=process.env.TEST_BASE_URL;
+  const entry=await fetch(base+'/',{redirect:'manual'});
+  assert.equal(entry.status,307,'New visitors enter English');
+  assert.equal(new URL(entry.headers.get('location'),base).pathname,'/en');
   for(const prefix of ['', '/en'])for(const route of ['', '/about','/solutions','/solutions/composita','/technology','/news','/contact','/services']) {
     const url=prefix+route||'/';
-    const response=await fetch(base+url);
+    const response=await fetch(base+url,{headers:{Cookie:'site-language=zh'}});
     assert.equal(response.status,200,url);
     const html=await response.text();
     assert.ok(html.includes(`lang="${prefix?'en':'zh-Hant-TW'}"`),`Wrong document locale: ${url}`);
@@ -33,7 +36,7 @@ if(process.env.TEST_BASE_URL) {
     console.log(`PASS: ${url}`);
   }
   for(const url of ['/en/missing-page','/missing-page','/en/news/missing-article']){
-    const response=await fetch(base+url);
+    const response=await fetch(base+url,{headers:{Cookie:'site-language=zh'}});
     const html=await response.text();
     // App Router can stream a 200 before notFound; it must still emit noindex
     // and the localized not-found UI, never a valid content page.
