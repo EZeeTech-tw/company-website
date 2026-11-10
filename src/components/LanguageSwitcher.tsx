@@ -14,9 +14,6 @@ export function LanguageSwitcher() {
   function switchTo(next: 'zh' | 'en') {
     // Preserve query parameters and section anchors, including contact inquiry type.
     setPending(true);
-    // A browser preference is written only in this user-triggered event, never during render.
-    // eslint-disable-next-line react-hooks/immutability
-    document.cookie = `site-language=${next}; Path=/; Max-Age=31536000; SameSite=Lax${window.location.protocol === 'https:' ? '; Secure' : ''}`;
     // Reload the document so the root html language, provider and shared navigation
     // all switch together; Next otherwise retains the root layout during navigation.
     window.location.assign(`${getPathname({href:pathname,locale:next})}${window.location.search}${window.location.hash}`);

@@ -3,22 +3,27 @@ import fs from 'node:fs';
 import matter from 'gray-matter';
 const base=process.env.TEST_BASE_URL || 'http://127.0.0.1:3008';
 const slugs=fs.readdirSync('content/news').filter(f=>f.endsWith('.mdx'));
-const routes=['','/about','/solutions','/solutions/composita','/technology','/news','/contact','/services',...slugs.map(f=>'/news/'+f.replace(/\.mdx$/,''))];
+const routes=['','/about','/solutions/composita','/technology','/news','/contact','/services',...slugs.map(f=>'/news/'+f.replace(/\.mdx$/,''))];
 const links=new Set(),assets=new Set();
 let pages=0;
-for(const prefix of ['','/en'])for(const route of routes){
+for(const prefix of ['','/zh'])for(const route of routes){
   const url=prefix+route||'/';
-  const response=await fetch(base+url);
+  const response=await fetch(base+url,{headers:{Cookie:'site-language=zh'}});
   assert.equal(response.status,200,url);
   const html=await response.text();
   assert.ok(!html.includes('NEXT_HTTP_ERROR_FALLBACK;404'),url);
   assert.ok(!/SSERS/i.test(html),`Retired product still present: ${url}`);
-  assert.ok(html.includes(`lang="${prefix?'en':'zh-Hant-TW'}"`),url);
+  assert.ok(html.includes(`lang="${prefix?'zh-Hant-TW':'en'}"`),url);
   const content=html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/g,'');
   if(route==='/news')for(const file of slugs){const {data}=matter(fs.readFileSync('content/news/'+file,'utf8'));if(!data.hidden)assert.ok(content.includes('/news/'+file.replace(/\.mdx$/,'')),`Missing public news card: ${url}/${file}`);}
   for(const [,href] of content.matchAll(/<a\b[^>]*href="([^"]+)"/g))if(href.startsWith('/')&&!href.startsWith('//'))links.add(href.replaceAll('&amp;','&').split('#')[0]);
   for(const [,src] of content.matchAll(/<img\b[^>]*src="([^"]+)"/g))if(src.startsWith('/'))assets.add(src.replaceAll('&amp;','&'));
-  if(prefix && route.startsWith('/news/'))assert.ok(content.includes('The original article below is in Traditional Chinese.'),url);
+  if(!prefix && route.startsWith('/news/')) {
+    assert.ok(content.includes('<article lang="en"'),url);
+    assert.ok(!content.includes('English summary') && !content.includes('The original article below'),url);
+    const visible=content.replace(/<style\b[^>]*>[\s\S]*?<\/style>/g,'').replace(/<[^>]*>/g,'');
+    assert.ok(!/[\u3400-\u9fff]/.test(visible),`Untranslated visible news text: ${url}`);
+  }
   pages++;
 }
 for(const href of links){const response=await fetch(base+href);assert.equal(response.status,200,`Broken internal link: ${href}`);const html=await response.text();assert.ok(!html.includes('NEXT_HTTP_ERROR_FALLBACK;404'),`Soft-404 link: ${href}`);}

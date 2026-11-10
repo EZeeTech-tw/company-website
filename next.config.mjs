@@ -27,27 +27,25 @@ const nextConfig = {
   experimental: {globalNotFound: true},
   async rewrites() {
     return {beforeFiles: [], afterFiles: [
-      {source: '/', destination: '/zh'},
-      ...['about','contact','technology','news','solutions','insights','services','waitlist'].map(route => ({source:`/${route}`,destination:`/zh/${route}`})),
-      {source:'/insights/:slug',destination:'/zh/insights/:slug'},
-      {source:'/news/:slug',destination:'/zh/news/:slug'},
-      {source:'/solutions/:slug',destination:'/zh/solutions/:slug'},
+      {source: '/', destination: '/en'},
+      ...['about','contact','technology','news','insights','services','waitlist'].map(route => ({source:`/${route}`,destination:`/en/${route}`})),
+      {source:'/insights/:slug',destination:'/en/insights/:slug'},
+      {source:'/news/:slug',destination:'/en/news/:slug'},
+      {source:'/solutions/:slug',destination:'/en/solutions/:slug'},
     ], fallback: []};
   },
   async redirects() {
     return [
-      { source: '/solutions/ssers', destination: '/solutions', statusCode: 301 },
-      { source: '/en/solutions/ssers', destination: '/en/solutions', statusCode: 301 },
-      ...['','/en'].map(prefix=>({source:`${prefix}/contact`,has:[{type:'query',key:'type',value:'ssers'}],destination:`${prefix}/contact?type=other`,statusCode:301})),
-      { source: '/zh', destination: '/', permanent: true },
-      { source: '/zh/:path*', destination: '/:path*', permanent: true },
-      { source: '/en/solutions/compositera', destination: '/en/solutions/composita', statusCode: 301 },
-      { source: '/en/product', destination: '/en/solutions', statusCode: 301 },
-      { source: '/en/contact', has: [{type:'query',key:'type',value:'compositera'}], destination:'/en/contact?type=composita',statusCode:301 },
-      { source: "/solutions/compositera", destination: "/solutions/composita", statusCode: 301 },
-      { source: "/contact", has: [{ type: "query", key: "type", value: "compositera" }], destination: "/contact?type=composita", statusCode: 301 },
-      { source: "/product", destination: "/solutions", statusCode: 301 },
-      { source: "/index.html", destination: "/", statusCode: 301 },
+      ...['','/zh','/en'].flatMap(prefix => {
+        const target = prefix === '/zh' ? '/zh' : '';
+        return [
+          ...['/solutions','/solutions/ssers','/solutions/compositera','/product'].map(route => ({source:prefix+route,destination:target+'/solutions/composita',statusCode:301})),
+          ...['ssers','compositera'].map(type=>({source:prefix+'/contact',has:[{type:'query',key:'type',value:type}],destination:target+`/contact?type=${type==='ssers'?'other':'composita'}`,statusCode:301})),
+        ];
+      }),
+      { source: '/en', destination: '/', statusCode: 301 },
+      { source: '/en/:path*', destination: '/:path*', statusCode: 301 },
+      { source: '/index.html', destination: '/', statusCode: 301 },
     ];
   },
   turbopack: {

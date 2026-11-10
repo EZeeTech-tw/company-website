@@ -10,6 +10,7 @@ import { AnimateOnScroll } from "@/components/AnimateOnScroll";
 import { getNewsBySlug, getNewsSlugs } from "@/lib/news";
 import { pageMetadata } from "@/lib/metadata";
 import { siteUrl } from "@/lib/site";
+import { localePath } from "@/lib/locale-path";
 import { getLocale } from 'next-intl/server';
 import { localizeNews } from '@/i18n/news';
 
@@ -29,8 +30,8 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: NewsSlugPageProps) {
  setRequestLocale((await params).locale);
   const { slug } = await params;
-  const post = getNewsBySlug(slug);
-  if (!post) return { title: "找不到新聞", robots: { index: false } };
+  const post = getNewsBySlug(slug, (await params).locale);
+  if (!post) return { title: (await params).locale === 'en' ? 'News article not found' : '找不到新聞', robots: { index: false } };
   post.meta = localizeNews(post, await getLocale());
   const metadata = await pageMetadata(post.meta.title, post.meta.excerpt ?? post.meta.title, `/news/${slug}`);
   return { ...metadata, robots: post.meta.hidden ? { index: false, follow: true } : undefined,
@@ -41,7 +42,7 @@ export default async function NewsSlugPage({ params }: NewsSlugPageProps) {
  setRequestLocale((await params).locale);
  const t = await getText();
   const { slug } = await params;
-  const post = getNewsBySlug(slug);
+  const post = getNewsBySlug(slug, (await params).locale);
   if (!post) notFound();
   const locale = await getLocale();
   post.meta = localizeNews(post, locale);
@@ -51,8 +52,8 @@ export default async function NewsSlugPage({ params }: NewsSlugPageProps) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
         "@context": "https://schema.org", "@type": "NewsArticle", headline: post.meta.title,
         datePublished: post.meta.date, description: post.meta.excerpt,
-        mainEntityOfPage: `${siteUrl}${locale === 'en' ? '/en' : ''}/news/${slug}`,
-        inLanguage: 'zh-Hant',
+        mainEntityOfPage: `${siteUrl}${localePath(`/news/${slug}`,locale)}`,
+        inLanguage: locale === 'en' ? 'en' : 'zh-Hant',
         author: { "@type": "Organization", name: "EZeeTech", url: siteUrl },
         publisher: { "@type": "Organization", name: "EZeeTech", url: siteUrl },
         image: post.meta.image ? new URL(post.meta.image, siteUrl).href : `${siteUrl}/opengraph-image`,
@@ -76,8 +77,7 @@ export default async function NewsSlugPage({ params }: NewsSlugPageProps) {
             href="/news"
             className="text-link mb-8 inline-block"
           >{t("← 返回最新消息")}</Link>
-          {locale === 'en' && <aside className="feature-card mb-8"><h2 className="font-semibold">English summary</h2><p className="mt-3">{post.meta.excerpt || post.meta.title}</p><p className="text-sm text-slate-500 mt-4">The original article below is in Traditional Chinese. Its publication date and historical content are preserved.</p></aside>}
-          <article lang="zh-Hant" className="w-full min-w-0 overflow-hidden">
+          <article lang={locale === 'en' ? 'en' : 'zh-Hant'} className="w-full min-w-0 overflow-hidden">
             <div className="prose prose-slate prose-img:rounded-lg max-w-4xl">
               <MDXRemote source={post.content} components={mdxComponents} />
             </div>

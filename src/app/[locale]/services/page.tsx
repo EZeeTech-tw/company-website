@@ -5,6 +5,7 @@ import {Container} from '@/components/Container';
 import {PageHero} from '@/components/PageHero';
 import {pageMetadata} from '@/lib/metadata';
 import {siteUrl} from '@/lib/site';
+import {localePath} from '@/lib/locale-path';
 
 type Props={params:Promise<{locale:string}>};
 export const dynamic='error';
@@ -47,7 +48,7 @@ export default async function ServicesPage({params}:Props){
   ['費用與時程怎麼決定？','依零件複雜度、資料完整度、工況數、設計方案、審查次數，以及製造與測試需求評估，並在合作提案中確認範圍、里程碑與報價。']
  ];
  return <>
- <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify({'@context':'https://schema.org','@type':'Service',name:en?'Composita composite engineering services':'Composita 複合材料工程服務',serviceType:en?'Composite structural design, finite element analysis and design for manufacturing':'複合材料結構設計、有限元素分析與可製造性評估',url:`${siteUrl}${en?'/en':''}/services`,provider:{'@type':'Organization',name:'EZeeTech',url:siteUrl}}).replace(/</g,'\u003c')}}/>
+ <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify({'@context':'https://schema.org','@type':'Service',name:en?'Composita composite engineering services':'Composita 複合材料工程服務',serviceType:en?'Composite structural design, finite element analysis and design for manufacturing':'複合材料結構設計、有限元素分析與可製造性評估',url:`${siteUrl}${localePath('/services',locale)}`,provider:{'@type':'Organization',name:'EZeeTech',url:siteUrl}}).replace(/</g,'\u003c')}}/>
  <PageHero eyebrow="SERVICES & DELIVERABLES" title={en?'Clear scope. Reviewable deliverables.':'把需求說清楚，讓交付有依據。'} description={en?'Composita connects material selection, structural design, FEA and prototype coordination. Start with the engineering decision you need to make.':'Composita 串聯選材、結構設計、FEA 與打樣對接。從你要解決的工程問題開始，確認適合的工作範圍與交付內容。'} breadcrumb={[{label:en?'Services & Deliverables':'服務與交付'}]}><div className="button-row"><Link href="/contact?type=composita" className="btn btn-primary">{en?'Discuss your requirement ↗':'討論工程需求 ↗'}</Link><a className="btn btn-ghost" href="#deliverables">{en?'Explore deliverables':'查看交付內容'}</a></div></PageHero>
  <nav className="service-anchor-nav" aria-label={en?'Service page sections':'服務頁面章節'}><Container><a href="#deliverables">{en?'What you can commission':'服務與交付'}</a><a href="#process">{en?'How we work':'合作流程'}</a><a href="#prepare">{en?'What to prepare':'需求準備'}</a><a href="#questions">{en?'Common questions':'常見問題'}</a></Container></nav>
  <section id="deliverables"><Container className="section-space"><div className="service-intro"><div><p className="eyebrow">WHAT YOU CAN COMMISSION</p><h2>{en?'Choose the work your project needs.':'依開發階段，選擇需要的工程工作。'}</h2><p>{en?'Commission a defined stage or connect several stages into a development scope. Agree the deliverables and acceptance conditions before execution.':'可針對單一階段委託，也可依需求串聯多個階段。執行前共同確認工作範圍、交付清單與驗收條件。'}</p></div><Image src="/insights/outsourcing-composite-engineering.svg" alt={en?'Project requirements connect to engineering work and deliverables.':'從需求資料、工程處理到交付成果的三段流程。'} width={1200} height={640} unoptimized/></div>

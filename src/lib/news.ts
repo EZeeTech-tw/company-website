@@ -75,12 +75,14 @@ export function getNewsList(): NewsItem[] {
   return items.filter((item) => !item.meta.hidden);
 }
 
-export function getNewsBySlug(slug: string): NewsPost | null {
+export function getNewsBySlug(slug: string, locale = 'zh'): NewsPost | null {
   if (!getNewsSlugs().includes(slug)) return null;
   const fullPath = path.join(CONTENT_DIR, `${slug}.mdx`);
   if (!fs.existsSync(fullPath)) return null;
   const raw = fs.readFileSync(fullPath, "utf-8");
   const { data, content } = matter(raw);
+  const englishPath = path.join(CONTENT_DIR, 'en', `${slug}.mdx`);
+  if (locale === 'en' && !fs.existsSync(englishPath)) throw new Error(`Missing full English news article: ${slug}`);
   return {
     slug,
     meta: {
@@ -91,7 +93,7 @@ export function getNewsBySlug(slug: string): NewsPost | null {
       hidden: (data.hidden as boolean) ?? false,
       category: categoryFor(data),
     },
-    content,
+    content: locale === 'en' ? fs.readFileSync(englishPath, 'utf-8') : content,
   };
 }
 

@@ -34,17 +34,17 @@ console.log('PASS: Gmail validation, consent, spam trap, origin, mocked delivery
 
 if (process.env.TEST_BASE_URL) {
   const base = process.env.TEST_BASE_URL;
-  for (const prefix of ['', '/en']) {
+  for (const prefix of ['', '/zh']) {
     const response = await fetch(`${base}${prefix}/waitlist`);
     assert.equal(response.status, 200);
     const html = await response.text();
     assert.ok(html.includes(`https://www.ezeetech.tw${prefix}/waitlist`));
     assert.ok(html.includes('name="email"') && html.includes('name="consent"'));
-    assert.ok(html.includes(prefix ? 'Be first to hear.' : '搶先一步，收到消息。'));
+    assert.ok(html.includes(prefix ? '搶先一步，收到消息。' : 'Be first to hear.'));
     const home = await (await fetch(`${base}${prefix || '/'}`,{headers:{Cookie:'site-language=zh'}})).text();
     assert.ok(home.includes(`href="${prefix}/waitlist"`));
   }
   const sitemap = await (await fetch(`${base}/sitemap.xml`)).text();
-  assert.ok(sitemap.includes('/en/waitlist') && sitemap.includes('tw/waitlist'));
+  assert.ok(sitemap.includes('/zh/waitlist') && sitemap.includes('tw/waitlist'));
   console.log('PASS: bilingual pages, homepage entries, canonical and sitemap.');
 }

@@ -1,2 +1,2 @@
 import { getRequestConfig } from 'next-intl/server';
-export default getRequestConfig(async ({ requestLocale }) => ({ locale: (await requestLocale) === 'en' ? 'en' : 'zh', messages: {}, timeZone: 'Asia/Taipei' }));
+export default getRequestConfig(async ({ requestLocale }) => ({ locale: (await requestLocale) === 'zh' ? 'zh' : 'en', messages: {}, timeZone: 'Asia/Taipei' }));

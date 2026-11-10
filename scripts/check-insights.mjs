@@ -10,15 +10,15 @@ const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Taipei'}).format(new
 for(const a of insights){assert.ok(a.date<=today,'No future publication dates');for(const slug of a.related)assert.ok(insights.some(b=>b.slug===slug));for(const locale of ['zh','en']){assert.ok(a[locale].sections.length>=4);assert.ok(a[locale].sections.every(s=>s.paragraphs.length));}for(const reference of a.references)assert.ok(['ocw.mit.edu','ntrs.nasa.gov','standards.nasa.gov'].includes(new URL(reference.url).hostname),'Prefer academic and research references');}
 const base=process.env.TEST_BASE_URL;
 if(base){
- for(const prefix of ['','/en']){
+ for(const prefix of ['','/zh']){
   const list=await fetch(base+prefix+'/insights');assert.equal(list.status,200);const index=await list.text();
   for(const a of insights){
    assert.ok(index.includes(`${prefix}/insights/${a.slug}`));
    const route=prefix+'/insights/'+a.slug;const r=await fetch(base+route);assert.equal(r.status,200,route);const html=await r.text();
    assert.ok(!html.includes('NEXT_HTTP_ERROR_FALLBACK'));
-   assert.ok(html.includes(`lang="${prefix?'en':'zh-Hant-TW'}"`));
+   assert.ok(html.includes(`lang="${prefix?'zh-Hant-TW':'en'}"`));
    const canonical=html.match(/rel="canonical" href="([^"]+)"/);assert.equal(new URL(canonical[1]).pathname,route);
-   const copy=a[prefix?'en':'zh'];assert.ok(html.includes(copy.title));
+   const copy=a[prefix?'zh':'en'];assert.ok(html.includes(copy.title));
    const schemas=[...html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/g)].map(m=>JSON.parse(m[1]));
    const post=schemas.flatMap(s=>s['@graph']??[s]).find(s=>s['@type']==='BlogPosting');assert.equal(post.headline,copy.title);assert.equal(post.datePublished,a.date);
    const imagePath=`/insights/${a.slug}.png`;

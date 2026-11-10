@@ -16,7 +16,7 @@ export default async function ProductPage({params}: {params: Promise<{locale:str
  const t = await getText();
   return (
     <>
-      <PageHero variant="hero-carbon" eyebrow="ADVANCED COMPOSITE ENGINEERING" title="Composita — From Concept to Composite." description={t("Composita 是 EZeeTech 旗下的先進複合材料工程產品線，結合結構設計、FEA、DFM 與快速打樣資源，協助無人機、機器人及硬體研發團隊開發可分析、可製造、可驗證的輕量化零件。")} breadcrumb={[{label:t("產品與解決方案"),href:"/solutions"},{label:"Composita"}]}>
+      <PageHero variant="hero-carbon" eyebrow="ADVANCED COMPOSITE ENGINEERING" title="Composita — From Concept to Composite." description={t("Composita 是 EZeeTech 旗下的先進複合材料工程產品線，結合結構設計、FEA、DFM 與快速打樣資源，協助無人機、機器人及硬體研發團隊開發可分析、可製造、可驗證的輕量化零件。")} breadcrumb={[{label:"Composita"}]}>
         <div className="button-row"><Link href="/contact?type=composita" className="btn btn-primary">{t("討論您的開發需求 ↗")}</Link><Link href="/services" className="btn btn-ghost">{t("了解服務內容")}</Link></div>
       </PageHero>
 
