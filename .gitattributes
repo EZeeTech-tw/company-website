@@ -1,0 +1,4 @@
+
+# Preserve generated document bytes across Windows and deployment checkouts.
+*.pdf binary
+*.zip binary

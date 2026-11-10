@@ -31,7 +31,7 @@ def text(c, value, x, y, width=W-2*M, style=STYLE):
 def title(c, doc_id, heading, subheading, page, pages):
     c.setFillColor(NAVY);c.rect(0,H-133,W,133,fill=1,stroke=0)
     c.setFillColor(HexColor('#93c5fd'));c.setFont('Helvetica-Bold',9)
-    c.drawString(M,H-32,'COMPOSITA / ENGINEERING SAMPLE')
+    c.drawString(M,H-32,'EZeeTech / COMPOSITA / ENGINEERING SAMPLE')
     c.setFillColor(white);c.setFont('Helvetica-Bold',23);c.drawString(M,H-68,heading)
     text(c,subheading,M,H-84,W-2*M,ParagraphStyle('sub',parent=SMALL,textColor=HexColor('#cbd5e1')))
     c.setStrokeColor(LINE);c.line(M,39,W-M,39)
