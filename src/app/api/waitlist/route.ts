@@ -18,7 +18,7 @@ export async function POST(request: Request) {
     const email = data.email.trim().toLowerCase();
     const result = await new Resend(process.env.RESEND_API_KEY).emails.send({
       from: 'noreply@ezeetech.tw',
-      to: ['info@ezeetech.tw', 'info.ezeetech.sustain@gmail.com', 'ezeetech.2025@gmail.com'],
+      to: ['info@ezeetech.tw', 'info.ezeetech.sustain@gmail.com'],
       replyTo: email,
       subject: 'Composita OS Waitlist｜新登記',
       text: `Gmail: ${email}\n產品: Composita OS\n同意接收搶先體驗與產品上線通知: 是\n語言: ${data.locale === 'en' ? 'English' : '繁體中文'}\n取消登記請由公司信箱處理。`,

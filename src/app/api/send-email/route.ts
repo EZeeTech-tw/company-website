@@ -17,7 +17,7 @@ export async function POST(request: Request) {
   const text=[`詢問類型：${inquiryTypes[type]}`,...fields.map(key=>`${labels[key]}：${typeof data[key]==="string"?data[key]:""}`),...(type==="composita"?[`需求服務：${(data.services as string[]).join("、")}`]:[])].join("\n\n");
   const result=await new Resend(process.env.RESEND_API_KEY).emails.send({
    from:"noreply@ezeetech.tw",
-   to:["info@ezeetech.tw","info.ezeetech.sustain@gmail.com","ezeetech.2025@gmail.com"],
+   to:["info@ezeetech.tw","info.ezeetech.sustain@gmail.com"],
    replyTo:data.email as string,subject:`網站詢問｜${inquiryTypes[type]}`,text,
   });
   if(result.error || !result.data?.id) return Response.json({error:"寄送未完成，請稍後重試或直接來信 info@ezeetech.tw。"},{status:502});
