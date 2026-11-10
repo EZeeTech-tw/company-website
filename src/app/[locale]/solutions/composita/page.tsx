@@ -1,6 +1,7 @@
 import { setRequestLocale } from "next-intl/server";
 import { getText } from "@/i18n/server";
 import { Link } from "@/i18n/navigation";
+import { ProductVideoPreview } from "@/components/ProductVideoPreview";
 import { ApplicationPhoto } from "@/components/ApplicationPhoto";
 import { CompositeOSPreview } from "@/components/CompositeOSPreview";
 import { Container } from "@/components/Container";
@@ -14,11 +15,22 @@ export async function generateMetadata({params}: {params: Promise<{locale:string
 export default async function ProductPage({params}: {params: Promise<{locale:string}>}) {
  setRequestLocale((await params).locale);
  const t = await getText();
+ const en = (await params).locale === "en";
   return (
     <>
       <PageHero variant="hero-carbon" eyebrow="ADVANCED COMPOSITE ENGINEERING" title="Composita — From Concept to Composite." description={t("Composita 是 EZeeTech 旗下的先進複合材料工程產品線，結合結構設計、FEA、DFM 與快速打樣資源，協助無人機、機器人及硬體研發團隊開發可分析、可製造、可驗證的輕量化零件。")} breadcrumb={[{label:"Composita"}]}>
         <div className="button-row"><Link href="/contact?type=composita" className="btn btn-primary">{t("討論您的開發需求 ↗")}</Link><Link href="/services" className="btn btn-ghost">{t("了解服務內容")}</Link></div>
       </PageHero>
+
+      <section className="composita-film-section" aria-labelledby="composita-film-heading"><Container className="section-space">
+        <div className="section-heading"><p className="eyebrow">COMPOSITA OS / WORKFLOW IN MOTION</p><h2 id="composita-film-heading">{en ? 'See composite engineering take shape.' : '看見複材工程的每一步。'}</h2><p className="section-description">{en ? 'Three moments from our product film: layup modeling, analysis review and manufacturing planning.' : '從產品影片看三個環節：鋪層建模、分析檢閱與製造規劃。'}</p></div>
+        <div className="composita-film-grid">{([
+          { clip:'composita-layup', title:en?'Define the layup.':'定義鋪層。', description:en?'See the geometry and ply definitions together in the composite modeling interface.':'在複材建模介面中，同時檢視零件幾何與鋪層定義。', tag:'01 / LAYUP MODELING' },
+          { clip:'composita-analysis', title:en?'Inspect the response.':'檢閱結構反應。', description:en?'Explore the film’s analysis visualization and result review interface.':'觀看影片中的分析視覺化與結果檢閱介面。', tag:'02 / ANALYSIS REVIEW' },
+          { clip:'composita-manufacturing', title:en?'Plan the next step.':'規劃下一步。', description:en?'Connect the design conversation with manufacturing considerations and planning.':'將設計討論延伸至製造考量與後續規劃。', tag:'03 / MANUFACTURING' },
+        ] as const).map(item=><article className="composita-film-card" key={item.clip}><ProductVideoPreview clip={item.clip} label={item.title}/><div className="composita-film-copy"><p className="eyebrow">{item.tag}</p><h3>{item.title}</h3><p>{item.description}</p></div></article>)}</div>
+        <div className="composita-film-footer"><p>{en?'From the Composita OS product film · Platform in development.':'擷取自 Composita OS 產品影片 · 平台持續開發中。'}</p><Link className="text-link" href="/waitlist">{en?'Join the early access waitlist ↗':'加入搶先體驗候補名單 ↗'}</Link></div>
+      </Container></section>
 
       {/* The Challenge */}
       <section className="w-full bg-white border-t border-slate-200">
@@ -209,6 +221,16 @@ export default async function ProductPage({params}: {params: Promise<{locale:str
           <p className="text-slate-500 text-sm text-center mt-8 italic">{t("*實際服務範圍、交付項目與測試方式，將依專案需求及雙方確認的合作內容而定。")}</p>
         </Container>
       </section>
+
+      <section id="sample-deliverables" className="sample-deliverables" aria-labelledby="sample-deliverables-heading"><Container className="section-space">
+        <div className="sample-deliverables-intro"><div className="section-heading"><p className="eyebrow">ENGINEERING / SAMPLE DELIVERABLES</p><h2 id="sample-deliverables-heading">{en?'Know what a handoff can look like.':'先看看，工程交付長什麼樣。'}</h2><p className="section-description">{en?'Explore a worked documentation example: an engineering review, an explicit layup schedule and a delivery checklist.':'從一組文件範例，了解工程審查、完整鋪層定義與交付檢查的呈現方式。'}</p></div><a className="btn btn-primary" href="/downloads/composita-engineering-sample-pack.zip" download>{en?'Download sample pack ↓':'下載整套範例 ↓'}</a></div>
+        <div className="sample-download-grid">{([
+          {file:'composita-sample-engineering-report.pdf', title:en?'Engineering report':'示範工程報告', description:en?'An illustrative brief, geometry schematic, input-readiness review and the steps required before approval.':'示範需求、幾何示意、輸入資料完整性審查，以及核准前所需的步驟。',meta:en?'PDF · 2 pages · English':'PDF · 2 頁 · 英文'},
+          {file:'composita-sample-layup-table.pdf', title:en?'Layup schedule':'示範鋪層表', description:en?'Eight plies with angles, nominal thickness, z coordinates, coverage and an explicit stacking convention.':'8 層鋪層的角度、名義厚度、z 座標、覆蓋範圍與明確的堆疊方向。',meta:en?'PDF · 1 page · English':'PDF · 1 頁 · 英文'},
+          {file:'composita-sample-delivery-checklist.pdf', title:en?'Delivery checklist':'示範交付清單', description:en?'Ten handoff items with review evidence and a clear record of what is included, missing or not performed.':'10 項交付內容、審查依據，並標明已包含、未包含或尚未執行的項目。',meta:en?'PDF · 1 page · English':'PDF · 1 頁 · 英文'},
+        ]).map((item,index)=><article className="sample-download-card" key={item.file}><div className="sample-download-top"><span aria-hidden="true">0{index+1}</span><span>DEMO / REV A</span></div><h3>{item.title}</h3><p>{item.description}</p><span className="sample-download-meta">{item.meta}</span><a href={`/downloads/${item.file}`} className="text-link" download aria-label={`${en?'Download':'下載'} ${item.title} PDF`}>{en?'Download PDF ↓':'下載 PDF ↓'}</a></article>)}</div>
+        <p className="sample-deliverables-note">{en?'Illustrative documents, not a client project or released manufacturing data. No solver results or physical test data are included.':'文件為示範內容，非客戶專案或已核准的製造資料；不包含求解器分析結果或實測數據。'}</p>
+      </Container></section>
 
       <section id="compositeos"><Container className="section-space"><CompositeOSPreview/></Container></section>
 

@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocale } from 'next-intl';
 
-/** 12-second excerpt (00:42–00:54) from the company's Composita OS film. */
-export function ProductVideoPreview() {
+/** Silent excerpts from the company's Composita OS film. */
+export function ProductVideoPreview({ clip = 'composita-preview', label }: { clip?: 'composita-preview' | 'composita-layup' | 'composita-analysis' | 'composita-manufacturing'; label?: string }) {
   const en = useLocale() === 'en';
   const video = useRef<HTMLVideoElement>(null);
   const pausedByUser = useRef(false);
@@ -46,11 +46,11 @@ export function ProductVideoPreview() {
   }
 
   return <div className="product-video-preview">
-    <video ref={video} muted loop playsInline preload="none" poster="/media/composita-preview.jpg"
-      width={960} height={540} aria-label={en ? 'Composita OS composite analysis — 12-second silent preview' : 'Composita OS 複材分析：12 秒靜音預覽'}
+    <video ref={video} muted loop playsInline preload="none" poster={`/media/${clip}.jpg`}
+      width={960} height={540} aria-label={label || (en ? 'Composita OS composite analysis — silent preview' : 'Composita OS 複材分析：靜音預覽')}
       onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onError={() => setFailed(true)}>
-      <source src="/media/composita-preview.webm" type="video/webm"/>
-      <source src="/media/composita-preview.mp4" type="video/mp4"/>
+      <source src={`/media/${clip}.webm`} type="video/webm"/>
+      <source src={`/media/${clip}.mp4`} type="video/mp4"/>
     </video>
     {!failed && <button className="preview-playback" type="button" onClick={toggle} aria-label={playing ? (en ? 'Pause preview' : '暫停預覽') : (en ? 'Play preview' : '播放預覽')}>
       <span aria-hidden="true">{playing ? 'Ⅱ' : '▶'}</span><span>{playing ? (en ? 'Pause' : '暫停') : (en ? 'Play' : '播放')}</span>
