@@ -2,7 +2,7 @@ import { useText } from "@/i18n/useText";
 import Image from "next/image";
 
 const logos = [
-  { src: "/partners/grok-startups.svg", alt: "Grok for Startups", width: 272, height: 46, imageWidth: 108, caption: "for Startup program" },
+  { src: "/partners/grok-startups.svg", alt: "Grok for Startups", width: 232, height: 46, imageWidth: 108, caption: "Startup program" },
   { src: "/news/logo牆/mighty-net-transparent.png", alt: "Mighty Net", width: 92, height: 76 },
   { src: "/news/logo牆/4ac45dc8ea1cfe5be7abb4e55fcf9b5a.png", alt: "合作夥伴標誌", width: 120, height: 60 },
   { src: "/news/logo牆/NV_Inception_Program_Logo_NV_Inception_Logo_H_CMYK-1080x662-1-e1724183249153.webp", alt: "NVIDIA Inception Program", width: 140, height: 60 },
@@ -35,7 +35,7 @@ export function LogoMarquee() {
                 unoptimized
                 className="object-contain opacity-80 hover:opacity-100 transition-opacity filter brightness-0 invert"
               />
-              {logo.caption && <span className="text-sm font-medium tracking-wide text-slate-300">{logo.caption}</span>}
+              {logo.caption && <span className="text-xs font-medium leading-relaxed text-slate-300"><span className="block text-[10px] text-slate-400">for</span><span className="block">{logo.caption}</span></span>}
             </div>
           ))}
         </div>
