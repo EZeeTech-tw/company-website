@@ -2,6 +2,7 @@ import { useText } from "@/i18n/useText";
 import Image from "next/image";
 
 const logos = [
+  { src: "/partners/grok-startups.svg", alt: "Grok for Startups", width: 272, height: 46, imageWidth: 108, caption: "for Startup program" },
   { src: "/news/logo牆/mighty-net-transparent.png", alt: "Mighty Net", width: 92, height: 76 },
   { src: "/news/logo牆/4ac45dc8ea1cfe5be7abb4e55fcf9b5a.png", alt: "合作夥伴標誌", width: 120, height: 60 },
   { src: "/news/logo牆/NV_Inception_Program_Logo_NV_Inception_Logo_H_CMYK-1080x662-1-e1724183249153.webp", alt: "NVIDIA Inception Program", width: 140, height: 60 },
@@ -21,19 +22,20 @@ export function LogoMarquee() {
           {[...logos, ...logos].map((logo, index) => (
             <div
               key={`${logo.src}-${index}`}
-              className="flex-shrink-0 flex items-center justify-center"
+              className="flex-shrink-0 flex items-center justify-center gap-4"
               style={{ width: `${logo.width}px` }}
               aria-hidden={index >= logos.length}
             >
               <Image
                 src={logo.src}
                 alt={index < logos.length ? t(logo.alt) : ""}
-                width={logo.width}
+                width={logo.imageWidth ?? logo.width}
                 height={logo.height}
-                sizes={`${logo.width}px`}
+                sizes={`${logo.imageWidth ?? logo.width}px`}
                 unoptimized
                 className="object-contain opacity-80 hover:opacity-100 transition-opacity filter brightness-0 invert"
               />
+              {logo.caption && <span className="text-sm font-medium tracking-wide text-slate-300">{logo.caption}</span>}
             </div>
           ))}
         </div>
