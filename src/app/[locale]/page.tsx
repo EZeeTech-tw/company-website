@@ -19,11 +19,11 @@ export default async function HomePage({params}: {params: Promise<{locale:string
  const locale = (await params).locale;
  return <>
  <div className="home-opening">
+ <section className="waitlist-banner"><Container><div className="waitlist-banner-inner"><div><span className="waitlist-tag">COMPOSITA OS / EARLY ACCESS</span><h2>{locale==='en'?'An AI agent for composite analysis.':'複合材料分析，交給 AI Agent。'}</h2><p>{locale==='en'?'Join the Composita OS waitlist for early access updates on automated composite layup modeling, simulation and failure assessment.':'加入 Composita OS 候補名單，接收複材鋪層建模、模擬與失效評估自動化的搶先體驗通知。'}</p></div><Link href="/waitlist" className="btn btn-primary">{locale==='en'?'Join the waitlist ↗':'加入候補名單 ↗'}</Link></div></Container></section>
  <PageHero variant="hero-carbon home-hero" eyebrow="ADVANCED ENGINEERING TECHNOLOGIES" title="Engineering Ideas. Delivering Impact." description={<><p className="hero-subtitle">{t("工程驅動創新，技術創造價值。")}</p><p>{locale==='en'?'Composite design, simulation and prototyping for teams developing lightweight structures.':'以複材設計、數位模擬與快速打樣，協助研發團隊打造輕量化結構。'}</p></>}>
  <div className="button-row"><Link href="/waitlist" className="btn btn-primary">{locale==='en'?'Join the Composita OS waitlist ↗':'加入 Composita OS 候補名單 ↗'}</Link><Link href="/contact" className="btn btn-ghost">{t("討論工程需求")}</Link></div>
  <div className="hero-footer"><span>COMPOSITE ENGINEERING</span><span>STRUCTURAL DESIGN</span><span>DESIGN · SIMULATE · VALIDATE</span></div>
  </PageHero>
- <section className="waitlist-banner"><Container><div className="waitlist-banner-inner"><div><span className="waitlist-tag">COMPOSITA OS / EARLY ACCESS</span><h2>{locale==='en'?'An AI agent for composite analysis.':'複合材料分析，交給 AI Agent。'}</h2><p>{locale==='en'?'Join the Composita OS waitlist for early access updates on automated composite layup modeling, simulation and failure assessment.':'加入 Composita OS 候補名單，接收複材鋪層建模、模擬與失效評估自動化的搶先體驗通知。'}</p></div><Link href="/waitlist" className="btn btn-primary">{locale==='en'?'Join the waitlist ↗':'加入候補名單 ↗'}</Link></div></Container></section>
  </div>
  <LogoMarquee/>
  <section className="home-composite-section"><Container className="section-space"><SectionHeader eyebrow="COMPOSITE ENGINEERING" title={t("從複材工程，到自動化分析。")} description={t("結合 Composita 工程服務與 Composita OS Agent，串聯設計、分析與交付。")}/><div className="solutions-feature"><SolutionCard solution={solutions[0]}/><CompositeOSPreview/></div></Container></section>
